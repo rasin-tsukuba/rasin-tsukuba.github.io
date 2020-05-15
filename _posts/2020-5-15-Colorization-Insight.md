@@ -24,11 +24,13 @@ Colorization is to turning grayscale(mostly) images or videos to colorized versi
 
 Most images and videos in old age is in grayscale or monocolor. The aim of colorization is to get vivid and realistic visual effect, bring people back to their old age, and arise their memory. In video, such as movies and documentaries, colorized version can improve the watching experience. We take some small experiences and find out that human eyes are more appeal to colorized version of images and videos. Thus, colorized version is always better than grayscale version in visual experience. Moreover, colorized version contains more information.
 
-![An colorized example](img\post-colorization-insight-example1.png)
+![An colorized example](https://github.com/rasin-tsukuba/blog-images/blob/master/img/post-colorization-insight-example1.png?raw=true)
+
 
 In Biology and Medical area, colorization can aid professional pathologists judge and classify medical images. Colored medical image can seperate the difference between tissues and organs. 
 
-![T2 MR Brain Images. From: Colorization and Automated Segmentation of Human T2 MR Brain Images for Characterization of Soft Tissues](img\post-colorization-insight-example2.png)
+![T2 MR Brain Images. From: Colorization and Automated Segmentation of Human T2 MR Brain Images for Characterization of Soft Tissues](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/post-colorization-insight-example2.png)
+
 
 
 ### Reference

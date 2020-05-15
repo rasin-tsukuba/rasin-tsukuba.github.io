@@ -18,13 +18,15 @@ tags:
 
 ## What is Colorization
 
-Colorization is to turning grayscale(mostly) images or videos to colorized version, without losing its original content.
+Colorization is a term introduced by Wilson Markle in 1970 to describe computer-assisted process he invented for adding color to black and white movies or TV programs.
+
+The term is now used generically to describe any technique for turning grayscale(mostly) images or videos to colorized version, without losing its original content.
 
 ## Why Colorization
 
 Most images and videos in old age is in grayscale or monocolor. The aim of colorization is to get vivid and realistic visual effect, bring people back to their old age, and arise their memory. In video, such as movies and documentaries, colorized version can improve the watching experience. We take some small experiences and find out that human eyes are more appeal to colorized version of images and videos. Thus, colorized version is always better than grayscale version in visual experience. Moreover, colorized version contains more information.
 
-![An colorized example](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/blob/master/img/post-colorization-insight-example1.png?raw=true)
+![An colorized example](https://cdn.fstoppers.com/styles/large-16-9/s3/wp-content/uploads/2012/09/Feature-Image-Size.jpg)
 
 
 In Biology and Medical area, colorization can aid professional pathologists judge and classify medical images. Colored medical image can seperate the difference between tissues and organs. 
@@ -35,13 +37,22 @@ In Biology and Medical area, colorization can aid professional pathologists judg
 
 ## Pure Hand Colorization
 
+Hand colorization is laborious and time consuming. The first film colorization methods were hand done by individuals. Now, some artists are still using mannual colorization method to colorize old pictures. In Reddit, there are still some popular colorization forums, such as [Colorization](https://www.reddit.com/r/Colorization/) and [ColorizedHistory](https://www.reddit.com/r/ColorizedHistory/).
+
+For example, in order to colorize a still image an artist typically begins by segmenting the image into regions, and then proceeds to assign a color to each region. Thus, the artist is often left with the task of manually delineating complicated boundaries between regions. Colorization of movies requires, in addition, tracking regions across the frames of a shot. Existing tracking algorithms typically fail to robustly track non-rigid regions, again requiring massive user intervention in the process. [^1]
+
+It is worth mentioning that even though this is a labor intensive job and very expensive in making videos, the hand colorization can give the best colorization effect than any other (semi-)automatic techniques. 
+
+## Semi-automatic Colorization
+
+Unfortunately, automatic segmentation algorithms often fail to correctly identify fuzzy or complex region boundaries,such as the boundary between a subject’s hair and her face. 
 
 
 ### Reference
 
-- [WWDC 2018 Keynote](https://developer.apple.com/videos/play/wwdc2018/101/)
-- [Apple WWDC 2018: what's new? All the announcements from the keynote](https://www.techradar.com/news/apple-wwdc-2018-keynote)
-- [iOS 加入「防沉迷」，macOS 有了暗色主题，今年的 WWDC 重点都在系统上](http://www.ifanr.com/1043270)
-- [苹果 WWDC 2018：最全总结看这里，不错过任何重点](https://sspai.com/post/44816)
+- [Colorized Lincoln Picture](https://fstoppers.com/video/how-amazing-colorization-black-and-white-photos-are-done-5384)
+- [T2 MR Brain Images.](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0033616)
+- [Wikipedia-Film-colorization](https://en.wikipedia.org/wiki/Film_colorization)
+- [^1]: Levin, Colorization using Optimization
  
 

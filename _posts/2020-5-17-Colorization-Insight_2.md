@@ -39,7 +39,7 @@ This algorithm is working in YUV color space, where Y is the monochromatic lumin
 Levin wished to impose the constraint that two neighboring pixels, **r, s** should have similar colors if their intensities are similar. Thus, to minimize the difference between the color U(**r**) at pixel **r** and the weighted average of the colors at neighboring pixels:
 
 ##
-J(U) = \sum_\b{r} (U(\b{r}) - \sum_{s\in N(\b{r})} w_{\b{rs}}U(\b{s}))^2
+J( U) \ =\sum _{\boldsymbol{r}}\left( U(\boldsymbol{r}) \ -\ \sum _{s\in N(\boldsymbol{r})} w_{\boldsymbol{rs}} U(\boldsymbol{s})\right)^{2}
 ##
 
 where $w_{\b{rs}}$ is a weighting function that sums to one, large when $Y(r)$ is similar to $Y(s)$, and small when the two intensiies are different. Similar weighting functions are used extensively in image segmentation algorithms, where they are usually referred to as affinity functions.
@@ -47,16 +47,16 @@ where $w_{\b{rs}}$ is a weighting function that sums to one, large when $Y(r)$ i
 He has experimented with two weighting functions. The simplest one is commonly used by image segmentation algorithms and is bsed on the squared difference between the two intensities:
 
 $$
-w_{/b{rs}} \propto \e^{-(Y(\b{r}) - Y(\b{s}))^2/2\sigma_\b{r}^2}
+w_{\boldsymbol{rs}} \propto \e^{-(Y(\boldsymbol{r}) - Y(\boldsymbol{s}))^2/2\sigma_{\boldsymbol{r}^2}}
 $$
 
 A second weighting function is based on the normalized correlation between the two intensities:
 
 $$
-w_{/b{rs}} \propto 1 + \frac{1}{\sigma_\b{r}^2}(Y(\b{r})-\mu_\b{r})(Y(\b{s}) - \mu_\b{r}}
+w_{\boldsymbol{rs}} \propto 1 + \frac{1}{\sigma_{\boldsymbol{r}}^2}(Y(\boldsymbol{r})-\mu_{\boldsymbol{r}})(Y(\boldsymbol{s}) - \mu_{\boldsymbol{r}})
 $$
 
-where $\mu_\b{r}$ and 
+where $\mu_{\boldsymbol{r}}$ and 
 
 
 ### Reference

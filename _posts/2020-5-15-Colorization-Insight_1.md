@@ -28,17 +28,12 @@ Most images and videos in old age is in grayscale or monocolor. The aim of color
 
 ![An colorized example](https://cdn.fstoppers.com/styles/large-16-9/s3/wp-content/uploads/2012/09/Feature-Image-Size.jpg)
 
-
-In Biology and Medical area, colorization can aid professional pathologists judge and classify medical images. Colored medical image can seperate the difference between tissues and organs. 
+In Biology and Medical area, colorization can aid professional pathologists judge and classify medical images. Colored medical image can separate the difference between tissues and organs. 
 
 ![T2 MR Brain Images. From: Colorization and Automated Segmentation of Human T2 MR Brain Images for Characterization of Soft Tissues](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/post-colorization-insight-example2.png)
-
 
 ### Reference
 
 - [Colorized Lincoln Picture](https://fstoppers.com/video/how-amazing-colorization-black-and-white-photos-are-done-5384)
 - [T2 MR Brain Images.](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0033616)
 - [Wikipedia-Film-colorization](https://en.wikipedia.org/wiki/Film_colorization)
-
- 
-

@@ -1,9 +1,9 @@
 ---
 layout:     post
-title:      Colorization Insight
-subtitle:   Some thoughts and ideas
-date:       2018-06-05
-author:     BY
+title:      Colorization Insight 1
+subtitle:   Introduction: What and Why
+date:       2020-05-15
+author:     Rasin
 header-img: img/post-colorization-insight.jpg
 catalog: true
 tags:
@@ -33,25 +33,6 @@ In Biology and Medical area, colorization can aid professional pathologists judg
 
 ![T2 MR Brain Images. From: Colorization and Automated Segmentation of Human T2 MR Brain Images for Characterization of Soft Tissues](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/post-colorization-insight-example2.png)
 
-# Evolution
-
-## Pure Hand Colorization
-
-Hand colorization is laborious and time consuming. The first film colorization methods were hand done by individuals. Now, some artists are still using mannual colorization method to colorize old pictures. In Reddit, there are still some popular colorization forums, such as [Colorization](https://www.reddit.com/r/Colorization/) and [ColorizedHistory](https://www.reddit.com/r/ColorizedHistory/).
-
-For example, in order to colorize a still image an artist typically begins by segmenting the image into regions, and then proceeds to assign a color to each region. Thus, the artist is often left with the task of manually delineating complicated boundaries between regions. Colorization of movies requires, in addition, tracking regions across the frames of a shot. Existing tracking algorithms typically fail to robustly track non-rigid regions, again requiring massive user intervention in the process. [^1]
-
-It is worth mentioning that even though this is a labor intensive job and very expensive in making videos, the hand colorization can give the best colorization effect than any other (semi-)automatic techniques. 
-
-## Semi-automatic Colorization
-
-Unfortunately, automatic segmentation algorithms often fail to correctly identify fuzzy or complex region boundaries,such as the boundary between a subject’s hair and her face. 
-
-$$
-R_{\mu \nu} - {1 \over 2}g_{\mu \nu}\,R + g_{\mu \nu} \Lambda
-= {8 \pi G \over c^4} T_{\mu \nu}
-$$
-
 
 ### Reference
 
@@ -59,6 +40,5 @@ $$
 - [T2 MR Brain Images.](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0033616)
 - [Wikipedia-Film-colorization](https://en.wikipedia.org/wiki/Film_colorization)
 
-[^1]: LEVIN, A., LISCHINSKI, D., AND WEISS, Y. 2004. Colorization using optimization. ACM Transactions on Graphics 23, 689– 694.
  
 

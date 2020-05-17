@@ -34,20 +34,20 @@ In 2004, Levin[^1] has proposed a new interactive colorization technique that re
 
 ![Levin example](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/20200517092539.png)
 
-This algorithm is working in YUV color space, where Y is the monochromatic luminance channel, which we will refere to simply as intensity, while U and V are the chrominance channels, encoding the color. The algorithm is given as input an intensity volum Y(x,y,t) and outputs two color volumes U(x,y,t) and V(x,y,t).
+This algorithm is working in YUV color space, where \\(Y\\) is the monochromatic luminance channel, which we will refere to simply as intensity, while \\(U\\) and \\(V\\) are the chrominance channels, encoding the color. The algorithm is given as input an intensity volum \\(Y(x,y,t)\\) and outputs two color volumes \\(U(x,y,t)\\) and \\(V(x,y,t)\\).
 
 Levin wished to impose the constraint that two neighboring pixels, **r, s** should have similar colors if their intensities are similar. Thus, to minimize the difference between the color U(**r**) at pixel **r** and the weighted average of the colors at neighboring pixels:
 
 ##
-J( U) \ =\sum _{\boldsymbol{r}}\left( U(\boldsymbol{r}) \ -\ \sum _{s\in N(\boldsymbol{r})} w_{\boldsymbol{rs}} U(\boldsymbol{s})\right)^{2}
+J(U)=\sum _{\boldsymbol{r}}\left( U(\boldsymbol{r})-\sum _{s\in N(\boldsymbol{r})} w_{\boldsymbol{rs}} U(\boldsymbol{s})\right)^2
 ##
 
-where $w_{\b{rs}}$ is a weighting function that sums to one, large when $Y(r)$ is similar to $Y(s)$, and small when the two intensiies are different. Similar weighting functions are used extensively in image segmentation algorithms, where they are usually referred to as affinity functions.
+where \\(w_{\boldsymbol{rs}}\\) is a weighting function that sums to one, large when $Y(\boldsymbol{r})$ is similar to \\(Y(\boldsymbol{s})\\), and small when the two intensiies are different. Similar weighting functions are used extensively in image segmentation algorithms, where they are usually referred to as affinity functions.
 
 He has experimented with two weighting functions. The simplest one is commonly used by image segmentation algorithms and is bsed on the squared difference between the two intensities:
 
 $$
-w_{\boldsymbol{rs}} \propto \e^{-(Y(\boldsymbol{r}) - Y(\boldsymbol{s}))^2/2\sigma_{\boldsymbol{r}^2}}
+w_{\boldsymbol{rs}} \propto e^{-(Y(\boldsymbol{r}) - Y(\boldsymbol{s}))^2/2\sigma_{\boldsymbol{r}^2}}
 $$
 
 A second weighting function is based on the normalized correlation between the two intensities:
@@ -56,7 +56,7 @@ $$
 w_{\boldsymbol{rs}} \propto 1 + \frac{1}{\sigma_{\boldsymbol{r}}^2}(Y(\boldsymbol{r})-\mu_{\boldsymbol{r}})(Y(\boldsymbol{s}) - \mu_{\boldsymbol{r}})
 $$
 
-where $\mu_{\boldsymbol{r}}$ and 
+where \\(\mu_{\boldsymbol{r}}\\) and 
 
 
 ### Reference

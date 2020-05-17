@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      Colorization Insight 1
-subtitle:   Introduction: What and Why
+subtitle:   Introduction What and Why
 date:       2020-05-15
 author:     Rasin
 header-img: img/post-colorization-insight.jpg

@@ -47,12 +47,18 @@ It is worth mentioning that even though this is a labor intensive job and very e
 
 Unfortunately, automatic segmentation algorithms often fail to correctly identify fuzzy or complex region boundaries,such as the boundary between a subject’s hair and her face. 
 
+$$
+R_{\mu \nu} - {1 \over 2}g_{\mu \nu}\,R + g_{\mu \nu} \Lambda
+= {8 \pi G \over c^4} T_{\mu \nu}
+$$
+
 
 ### Reference
 
 - [Colorized Lincoln Picture](https://fstoppers.com/video/how-amazing-colorization-black-and-white-photos-are-done-5384)
 - [T2 MR Brain Images.](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0033616)
 - [Wikipedia-Film-colorization](https://en.wikipedia.org/wiki/Film_colorization)
-- [^1]: Levin, Colorization using Optimization
+
+[^1]: LEVIN, A., LISCHINSKI, D., AND WEISS, Y. 2004. Colorization using optimization. ACM Transactions on Graphics 23, 689– 694.
  
 

@@ -90,6 +90,31 @@ where \\(\boldsymbol{r}\\) is a particular pixel, \\(\boldsymbol{s}\\) is one of
 
 #### Adaptive Edge Detection Algorithm
 
+They found that some colorized regions are blurred because different object colors propogating and interlacing together. The wrong colorization usually occurs near the cross borders of two objects.
+
+An adaptive edge detection scheme is proposed. First, they applied the Sobel filter with a high threshold, \\(TH_{high}\\), to the input grayscale image, which generate our initial edge map. Four kinds of Sobel filters adopted to detect **horizontal, vertialcal, diagonal down-left, and opposite diagonal down-right edges**, and the edge value, \\(E_{Sum}\\), is derived as follows:
+
+$$
+E_{Max} = \max(E_{Ver}, E_{Hor}, E_{Diag_dl}, E_{Diag_dr})
+$$
+
+$$
+E_{Sum} = \begin{cases}
+E_{Ver} +E_{Hor} & if\ E_{Max} =E_{Ver} \ or\ E_{Max} =E_{Hor}\\
+E_{Diag\_dl} +E_{Diag\_dr} & otherwise
+\end{cases}
+$$
+
+Secondly, the pixels marked as edges will be extended with a lower threshold along the direction of the edge. The running threshold is decreased adaptively by a factor of 0.8 until a low bound, \\(TH_{low}\\) is reached. After all edge pixels in the initial map have gone through this extension process, we get an extended edge map.
+
+Thirdly, for each pixel in the extended edge map we find the local maximum among its 8 neighboring pixels by comparing their Sobel filtering outputs. Each pixel is either marked as local maximum or having its own maximum direction. After that, linking these local maximums to extract edge skeletons. In this process, we sort all local maximums and try to link them to two of their neighboring maximums. There are still some broken edges because of their Sobel filtering results are not large enough or lower than \\(TH_{low}\\). We search in the extended edge map for a path to link these two extremities if they are not belonging to the same connected edge or of far distance along the edge.
+
+![](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/20200517175650.png)
+
+### Non-Iterative
+
+
+
 ### Reference
 
 - [Wikipedia-Film-colorization](https://en.wikipedia.org/wiki/Film_colorization)

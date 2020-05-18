@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      Colorization Insight 1
+title:      Colorization Review 1
 subtitle:   Introduction What and Why
 date:       2020-05-15
 author:     Rasin
@@ -9,7 +9,6 @@ catalog: true
 tags:
     - Computer Vision
     - Colorization
-    - Deep Learning
 ---
 
 > Header Image: Reddit: [Jerry Stiller with his wife, Anne Meara, 1960s](https://www.reddit.com/r/Colorization/comments/gi4aky/jerry_stiller_with_his_wife_anne_meara_1960s/) 

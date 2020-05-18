@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      Colorization Insight 2
+title:      Colorization Review 2
 subtitle:   Related Works and Techniques
 date:       2020-05-17
 author:     Rasin
@@ -9,7 +9,6 @@ catalog: true
 tags:
     - Computer Vision
     - Colorization
-    - Deep Learning
 ---
 
 > Header Image: Reddit: [Snake Charmer _ Morocco_ 1950](https://www.reddit.com/r/Colorization/comments/gkjhsx/snake_charmer_morocco_1950) 

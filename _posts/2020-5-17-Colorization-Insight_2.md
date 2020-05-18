@@ -24,7 +24,7 @@ For example, in order to colorize a still image an artist typically begins by se
 
 It is worth mentioning that even though this is a labor intensive job and very expensive in making videos, the hand colorization can give the best colorization effect than any other (semi-)automatic techniques. 
 
-## Semi-automatic Colorization
+## Scribble-Based Colorization
 
 Unfortunately, automatic segmentation algorithms often fail to correctly identify fuzzy or complex region boundaries,such as the boundary between a subject’s hair and her face. 
 
@@ -150,8 +150,8 @@ $$
 where \\(chrominances(A)\\) stands for all the different unique chrominance in the region A and \\(W(\cdot)\\) is a function of the intrinsic distance that translates it into a blending weight. Some basic properties for \\(W\\):
 
 $$
-1) \lim_{r\rightarrow 0}W(r)=\infty
-2) \lim_{r\rightarrow \infty}W(r)=0
+1) \lim_{r\rightarrow 0}W(r)=\infty\\
+2) \lim_{r\rightarrow \infty}W(r)=0\\
 3) \lim_{d\rightarrow \infty}W(d+c)/W(d)=1
 $$
 Requirement 3 is necessary when there are two or more chrominance sources close-by but the blending is done relatively far from all sources. The desired visual result would even be the blending of all chrominance. For the experiments reported below we used
@@ -159,6 +159,12 @@ Requirement 3 is necessary when there are two or more chrominance sources close-
 $$
 W(r)=r^{-b}
 $$
+
+where \\(b\\) is the blending factor, typically \\(1 \leq b \leq 6\\). The factor defines how smooth is the chromnance transition.
+
+The whole algorithm is shown below.
+
+![](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/20200518095321.png)
 
 ### Reference
 

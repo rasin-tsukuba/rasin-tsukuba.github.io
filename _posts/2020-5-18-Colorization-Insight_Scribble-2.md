@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      Colorization Review 3
+title:      Colorization Insight Scribbled 2
 subtitle:   More about Scribble-based methods
 date:       2020-05-18
 author:     Rasin
@@ -116,10 +116,40 @@ In the color mapping step, colorization with rich color variation can be obtaine
 
 #### Color Labeling
 
+The objective of color labeling is to assign a color label to every pixel in the image, given the pseudo colors associated with user-drawn strokes.
+
 ##### Energy Optimization Framework
 
+The textures should be explicitly taken into the consideration. One straightforward method is using the texture feature as the likelihood term in graphcut. However, erroneous labels may be brought in.
 
+1. The texture features at the highly contrastive locations tend to be well clustered in the feature space.
+2. The smooth regions are characterized by the coherence between neighboring colors, thus a pixel therein can be reliably colorized based on the intensity continuity.
 
+Motivated by the observation above, we propose a new formulation that integrates the intensity continuity and the texture-similarity. A smoothness value identifying different natures of locations is used to guide the incorporation of the two constraints. We trust more in the texture similarity term for highly contrastive locations, while the intensity continuity is considered as more reliable for smooth locations.
+
+We obtain the likelihood of every pixel to be colored by each label color. This color label likelihood function is denoted as \\(L(\mathbb{C};p)\\), where \\(\mathbb{C}\\) represents all the label colors.
+
+We introduce an energy optimization framework that incorporates both intensity continuity and texture similarity constraints for all the pixels \\(p\\) in the image:
+
+$$
+E = \sum_{p\in img} (\lambda (p)E_1+(1-\lambda(p))E_2)
+$$
+
+![](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/20200519160428.png)
+
+##### Smoothness Map: \\(\lambda(p\\))
+
+In our method, we use the filtered edge map. At each pixel \\(p\\), the value of \\(\lambda(p\\)) is related to the distance between \\(p\\) to its nearest edge.  Specifically, we use the Canny operator to extract the edges of the image. We then apply a Gaussian filter with kernel \\(N(0,\sigma^2)\\) on the edge image to obtain a smoothed edge map. If \\(p\\) is small. In our implementation, the \\(\sigma\\) is set as a quarter of the patch size that we used for texture space analysis.
+
+![](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/20200519161313.png)
+
+#### Color Mapping
+
+Once a region is selected, the user chooses a few pixels. These pixels represent a significant luminance variation in the region. Each pixel is then given a corresponding color by the user. The chroma (UV) values for any other pixels are then interpolated by piece-wise linear mapping in luminance (Y) space to get a color palette.
+
+![](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/20200519161453.png)
+
+The final colorization result is not a hard composite of each colorized region. After colorizing the regions, we do a soft blending around the region boundary to make the color transition natural. Over a band along the boundary, we run the intensity continuity term. to get a blending weight for each label. The final color in this boundary region is the weighted average of the colors for each label. This enables our system to colorize the fine structures in the image.
 
 
 

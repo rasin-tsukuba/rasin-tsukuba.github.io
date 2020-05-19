@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      Colorization Review 1
+title:      Colorization Insight Introduction
 subtitle:   Introduction What and Why
 date:       2020-05-15
 author:     Rasin

@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      Colorization Review 2
+title:      Colorization Insight Scribbled 1
 subtitle:   Related Works and Techniques
 date:       2020-05-17
 author:     Rasin

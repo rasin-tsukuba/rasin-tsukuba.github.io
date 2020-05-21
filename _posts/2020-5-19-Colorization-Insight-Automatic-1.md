@@ -97,7 +97,7 @@ If \\(E(I_{(i, l)})\\) is lower than a threshold \\(\epsilon\\), \\(I_{(i,l)}\\)
 
 ![](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/20200520170802.png)
 
-### Algorithms 
+#### Algorithms 
 
 ![](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/20200520170544.png)
 
@@ -105,6 +105,55 @@ If \\(E(I_{(i, l)})\\) is lower than a threshold \\(\epsilon\\), \\(I_{(i,l)}\\)
 
 ![](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/20200520170632.png)
 
+It combines three levels of features with increasing receptive field: the raw image patch, DAISY features, and semantic features. These features are concatenated and fed into a three-layer fully connected neural network trained with an *L2* loss. Only this last component is optimized; the feature representations are fixed
+
+### Let there be color!
+
+Iizuka & Simo-Serra[^2] propose a network that concatenates two separate paths, specializing in global and local features, respectively. They called it **Joint Global and Local Model**, which means the network is formed by several subcomponents that form a Directed Acyclic Graph (DAG) and contain important discrepancies with widely-used standard models. In particular:
+
+1. can process images of any resolution
+2. incorporates global image priors for local predictions
+3. can directly transfer the style of an image into the colorization of another.
+
+![](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/20200521094546.png)
+
+![](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/20200521100834.png)
+
+The components are all tightly coupled and trained in an end-to-end fashion. The output of model is the chrominance of the image which is fused with the luminance to form the output image.
+
+#### Deep Networks
+
+The model use **ReLU** as activate function, and **Sigmoid** trasfer function for the color output layer.
+
+#### Fusing Global and Local Features for Colorization
+
+A 6-layer Convolutional Neural Network obtains low-level features directly from the input image. The convolution filter bank the net- work represents are shared to feed both the global features network and the mid-level features network. Instead of using max-pooling layers to reduce the size of the feature maps, we use convolution layers with increased strides. This is also impor- tant for increasing the spatial support of each layer. If padding is added to the layer, the output is effectively half the size of the input layer. This can be used to replace the max-pooling layers while maintaining performance.
+
+##### Global Image Features
+
+The global image features are obtained by further processing the low-level features with four convolutional layers followed by three fully-connected layers. This results in a **256-dimensional** vector representation of the image. Note that due to the nature of the linear layers in this network, it requires the input of the low-level features network to be of fixed size of 224 × 224 pixels.
+
+##### Mid-Level Features
+
+The mid-level features are obtained by processing the low-level fea- tures further with two convolutional layers. The output is bottlenecked from the original 512-channel low-level features to 256 channel mid-level features. Note that unlike the global image features, the low-level and mid-level features networks are fully convolutional networks, such that the output is a scaled version of the input. This can be thought of as concatenating the global features with the local features at each spatial location and processing them through a small one-layer network. This effectively combines the global feature and the local features to obtain a new feature map that is, as the mid-level features, a 3D volume. Therefore, the resulting features are independent of any resolution constraints that the global image features might have.
+
+##### Colorization Network
+
+Once the features are fused, they are processed by a set of convolutions and upsampling layers, the latter which consist of simply upsampling the input by using the nearest neighbour technique so that the output is twice as wide and twice as tall. These layers are alternated until the output is half the size of the original input. The output layer of the colorization network consists of a convolutional layer with a Sigmoid transfer function that outputs the chrominance of the input grayscale image.
+
+In order to train the network, we use the **Mean Square Error (MSE)** criterion. Given a color image for training, we convert the image to grayscale and CIE Lab colorspace. The input of the model is the grayscale image while the target output is the ab components of the CIE Lab colorspace. The ab components are globally normalized so they lie in the [0, 1] range of the Sigmoid transfer function. We then scale the target output to the size of the output of the colorization network and compute the MSE between the output and target output as the loss. This loss is then back-propagated through all the networks (global features, mid-level features and low-level features) to update all the parameters of the model.
+
+#### Colorization with Classification
+
+As learning these networks is an non-convex problem, we facilitate the optimization by also training for classification jointly with the colorization. As we train the model using a large-scale dataset for classification ofN classes, we have classification labels available for training. These labels correspond to a global image tag and thus can be used to guide the training of the global image features. We do this by introducing another very small neural network that consists of two fully-connected layers: a hidden layer with 256 outputs and an output layer with as many outputs as the number of classes in the dataset, which is N = 205 in our case. The input of this network is the second to last layer of the global features network with 512 outputs. We train this network using the cross-entropy loss, jointly with the MSE loss for the colorization network. Thus, the global loss of our network becomes:
+
+$$
+L(y^{color}, y^{class}) = ||y^{color} - y^{class}||^2_{FRO} - \alpha \large(y^{class}_{l^{class}} - \log \large(\sum_{i=0}^N \exp(y^{class}_i)\large)\large)
+$$
+
+
 ### Reference
 
 [^1]: Z. Cheng, Q. Yang, and B. Sheng, “Deep colorization,” in Proceedings of the IEEE International Conference on Computer Vision, 2015, pp. 415–423.
+
+[^2]: Iizuka, S., Simo-Serra, E., Ishikawa, H.: Let there be Color!: Joint End-to-end Learning of Global and Local Image Priors for Automatic Image Colorization with Simultaneous Classification. ACM Transactions on Graphics (Proc. of SIGGRAPH 2016) 35(4) (2016)

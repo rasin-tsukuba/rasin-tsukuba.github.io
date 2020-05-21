@@ -148,8 +148,13 @@ In order to train the network, we use the **Mean Square Error (MSE)** criterion.
 As learning these networks is an non-convex problem, we facilitate the optimization by also training for classification jointly with the colorization. As we train the model using a large-scale dataset for classification ofN classes, we have classification labels available for training. These labels correspond to a global image tag and thus can be used to guide the training of the global image features. We do this by introducing another very small neural network that consists of two fully-connected layers: a hidden layer with 256 outputs and an output layer with as many outputs as the number of classes in the dataset, which is N = 205 in our case. The input of this network is the second to last layer of the global features network with 512 outputs. We train this network using the cross-entropy loss, jointly with the MSE loss for the colorization network. Thus, the global loss of our network becomes:
 
 $$
-L(y^{color}, y^{class}) = ||y^{color} - y^{class}||^2_{FRO} - \alpha \large(y^{class}_{l^{class}} - \log \large(\sum_{i=0}^N \exp(y^{class}_i)\large)\large)
+L(y^{color}, y^{class}) = ||y^{color} - y^{groundtruth}||^2_{FRO} - \alpha \large(y^{class}_{l^{class}} - \log \large(\sum_{i=0}^N \exp(y^{class}_i)\large)\large)
 $$
+
+#### Optimization and Learning
+
+
+
 
 
 ### Reference

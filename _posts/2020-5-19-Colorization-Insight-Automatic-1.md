@@ -153,9 +153,17 @@ $$
 
 #### Optimization and Learning
 
+Note that when the input image size is of a different resolution, while the low-level feature weights are shared, a rescaled image of size 224 × 224 must be used for the global features network. This requires processing both the original image and the rescaled image through the low- level features network, increasing both memory consumption and computation time. 
 
+Learning very deep networks such as the one proposed directly from a random initialization is a very challenging task. One of the recent improvements that have made this possible is batch normalization. This has shown to speed up the learning greatly and allow learning of very deep networks from random initializations. We use batch normalization throughout the entire network during training. Once the network is trained, the batch normalization mean and standard deviation can be folded into the weights and the bias of the layer. This allows the network to not perform unnecessary computations during inference. 
 
+Therefore, instead of having to experiment and heuristically determine a good learning rate scheduler, we sidestep the problem by using the ADADELTA optimizer. This approach adaptively sets the learning rates for all the network parameters without requiring us to set a global learning rate. We follow the optimization procedure until convergence of the loss.
 
+#### Comparison of Color Spaces
+
+In particular, we compare RGB, YUV and Lab color spaces. In the case of RGB, the output of the model is 3 instead of 2 corresponding to the red, green and blue channels. We train directly using the RGB values; however, for testing, we convert the RGB image to YUV and substitute the input grayscale image as the Y channel of the image. This ensures that the output images of all the models have the same luminance. In the case of YUV and Lab, we output the chrominance and use the luminance of the input image to create the final colorized image. For all different color spaces, we normalize the values to lie in the [0, 1] range of the Sigmoid transfer function of the output layer.In general, results are very similar. However, we do find some cases in which the Lab gives the most reasonable approach in comparison with RGB and YUV. For this reason, we use Lab in our approach.
+
+![](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/20200521110209.png)
 
 ### Reference
 

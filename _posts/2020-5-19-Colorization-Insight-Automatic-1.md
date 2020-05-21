@@ -30,9 +30,9 @@ The proposed method has two major steps:
 #### Deep Learning Model
 
 ##### Formulation
-A deep neural network is a universal approximator that can represent arbitrarily complex continuous functions. Given a set of \\(\Lambda=\{\overrightarrow{G}, \overrightarrow{C}\}\\), where \\(\overrightarrow{G}\\) are grayscale images and \\(\overrightarrow{C}\\) are corresponding color images respectively, our method is based on a premise: there exists a complex gray-to-color mapping function \\(mathcal{F}\\) that can map the features extracted at each pixel in \\(\overrightarrow{G}\\) to the corresponding chrominance values in \\(\overrightarrow{C}\\). We aim at learning such a mapping function from \\(\Lambda\\) so that the conversion from a new gray image to color image can be achieved by using \\(\mathcal{F}\\).
+A deep neural network is a universal approximator that can represent arbitrarily complex continuous functions. Given a set of \\(\Lambda=\{\overrightarrow{G}, \overrightarrow{C}\}\\), where \\(\overrightarrow{G}\\) are grayscale images and \\(\overrightarrow{C}\\) are corresponding color images respectively, our method is based on a premise: there exists a complex gray-to-color mapping function \\(\mathcal{F}\\) that can map the features extracted at each pixel in \\(\overrightarrow{G}\\) to the corresponding chrominance values in \\(\overrightarrow{C}\\). We aim at learning such a mapping function from \\(\Lambda\\) so that the conversion from a new gray image to color image can be achieved by using \\(\mathcal{F}\\).
 
-In our model, the YUV color space is employed, since this color space minimizes the correlation between the three coordinate axes of the color space. For a pixel \\(p\\) in (\overrightarrow{G}\\), the output is simply the U and V channels of the corresponding pixel in (\overrightarrow{C}\\) and the input of (\mathcal{F}\\) is the feature descriptors we compute at pixel \\(p\\).
+In our model, the YUV color space is employed, since this color space minimizes the correlation between the three coordinate axes of the color space. For a pixel \\(p\\) in \\(\overrightarrow{G}\\), the output is simply the U and V channels of the corresponding pixel in \\(\overrightarrow{C}\\) and the input of \\(\mathcal{F}\\) is the feature descriptors we compute at pixel \\(p\\).
 
 We reformulate the gray-to-color mapping function as 
 
@@ -62,7 +62,7 @@ $$
 o^l_j=f(w^l_{j0}b + \sum_{i>0}w^l_{ji}o^{l-1}_i)
 $$
 
-where \\(w^l_{ji\\) is the weight of the connection between the \\(j^{th}\\) neuron in the \\(l^{th}\\) layer and the \\(i^{th}\\) neuron in the \\((l-1)^{th}\\) layer. The output of the neurons in the output layer is just the weighted combination of the outputs of the neurons in the procedding layer.
+where \\(w^l_{ji}\\) is the weight of the connection between the \\(j^{th}\\) neuron in the \\(l^{th}\\) layer and the \\(i^{th}\\) neuron in the \\((l-1)^{th}\\) layer. The output of the neurons in the output layer is just the weighted combination of the outputs of the neurons in the procedding layer.
 
 #### Feature Descriptor
 
@@ -90,6 +90,7 @@ We separate the adopted features into low-, mid- and high-level features. Let \\
 Visible artifacts still appear, especially on the objects with large color variances. One reason is that the receptive field of the DNN is limited on local patch, which causes large training ambiguities especially when large training set is utilized. Intuitively, the global image descriptor is able to reflect the scene category with the robustness to local noise, and there are typically smaller color variances within one scene than mixed scenes. Thus the global information is useful to reduce the matching/training ambiguities and improve the colorization accuracy. We incorporate the global information by an image clustering method. Using adaptive pixel clustering algorithm to trains a regressor assemble to model the light transport, we utilize a similar strategy to split the reference images into different scenes, for each of which a DNN is trained.
 
 The reference images are clustered adaptively on different layers by standard k-means clustering algorithm. After completing the training of DNN for cluster i on layer l, we measure the training error \\(E(I_{(i, l)})\\) for each reference image \\(I_{(i,l)}\\) as the negative PSNR computed from the colorization result \\(\hat{I}_{(i,l)}\\) and the ground truth image. 
+
 If \\(E(I_{(i, l)})\\) is lower than a threshold \\(\epsilon\\), \\(I_{(i,l)}\\) will be removed from the reference image set \\(\Lambda_{(i,l)}\\). As a result, the top layer contains all reference images while the lower layer comprises fewer images.
 
 **Semantic Histogram**: After scene-wise DNNs are trained, a straightforward colorization strategy is to find the nearest cluster for a target image and use the corresponding trained DNN to colorize it. However, it is very likely that the reference images in the searched cluster are globally similar but semantically different from the target images. 

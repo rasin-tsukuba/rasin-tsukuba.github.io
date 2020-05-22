@@ -58,7 +58,7 @@ We bin the Lab axes by evenly spaced Gaussian quantiles (µ = 0, σ = 25). They 
 For hue/chroma, we only consider marginal distributions and bin axes uniformly in [0, 1]. Since hue becomes unstable as chroma approaches zero, we add a sample weight to the hue based on the chroma: 
 
 $$
-L_{hue/chroma}(x,y) = D_{KL}(y_C||f_C(x)) + \lambnda_H y_C D_{KL}(y_H||f_H(x))
+L_{hue/chroma}(x,y) = D_{KL}(y_C||f_C(x)) + \lambda_H y_C D_{KL}(y_H||f_H(x))
 $$
 
 where \\(y_C\\) is the sample pixel's chroma. We set \\(\lambda_H=5\\), roughly the inverse expectation of \\(y_C\\), thus equally weighting hue and chroma.
@@ -75,7 +75,7 @@ For the L2 loss, all that remains is to combine each \\(\hat{y}_n\\) with the re
 For Lab output, we achieve the best qualitative and quantitative results using expectations. For hue/chroma, the best results are achieved by taking the median of the chroma. Many objects can appear both with and without chroma, which means \\(C = 0\\) is a particularly common bin. This mode draws the expectation closer to zero, producing less saturated images. As for hue, since it is circular, we first compute the complex expectation:
 
 $$
-z=\mathcal{E}_{H~f_h(x)}[H] \triangleq \frac{1}{K}\sum_k [f_h(x)]_k \e^{i\theta_k},\ \theta_k=2\pi \frac{k + 0.5}{K}
+z=\mathcal{E}_{H~f_h(x)}[H] \triangleq \frac{1}{K}\sum_k [f_h(x)]_k \exp^{i\theta_k},\ \theta_k=2\pi \frac{k + 0.5}{K}
 $$
 
 We then set hue to the argument of z remapped to lie in [0, 1).
@@ -100,11 +100,67 @@ We initialize with a version of VGG-16 pretrained on ImageNet, adapting it to gr
 
 ### Colorful Image Colorization
 
+Zhang[^2] has form the problem into model enough of the statistical dependencies between the semantics and the textures of grayscale images and their color versions in order to produce visually compelling results.
 
+![](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/20200522095954.png)
 
+We train a CNN to map from a grayscale input to a distribution over quantized color value outputs using the architecture.
+
+![](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/20200522100022.png)
+
+#### Objective Function
+
+We perform this task in CIE Lab color space. Because distances in this space model perceptual distance is the Euclidean loss:
+
+$$
+L_2(\hat{Y}, Y) = \frac{1}{2}\sum_{h,w}||Y_{h,w}-\hat{Y}_{h,w}||_2^2
+$$
+
+However, this loss is not robust to the inherent ambiguity and multimodal nature of the colorization problem. If an object can take on a set of distinct *ab* values, the **optimal solution to the Euclidean loss will be the mean of the set**. In color prediction, this averaging **effect favors grayish**, desaturated results. Additionally, if the set of plausible colorizations is non-convex, the solution will **in fact be out of the set**, giving implausible results.
+
+Instead, we treat the problem as multinomial classification. We quantize the *ab* output space into bins with grid size 10 and keep the Q = 313 values which are in-gamut. For a given input \\(X\\), we learn a mapping \\(\hat{Z}=\mathcal{G}(X)\\) to a probability distribution over possible color \\(\hat{Z} \in [0, 1]^{H\times W\times Q}\\), where *Q* is the number of quantized ab values.
+
+To compare predicted \\(\hat{Z}\\) against ground truth, we define function \\(\hat{Z}=\mathcal{H}_{gt}^{-1}(Y)\\), which converts ground truth color *Y* to vector *Z*, using a soft-encoding scheme.
+
+For soft-enconding scheme:
+
+![](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/20200522102840.png)
+
+We then use multinomial cross entropy loss:
+
+$$
+L_{cl}(\hat{Z}, Z) = -\sum_{h,w}v(Z_h, w)\sum_q Z_{h,w,q} \log(\hat{Z}_{h,w,q})
+$$
+
+where \\(v()\\) is a weighting term that can be used to rebalance the loss based on color-class rarity. Finally, we map probability distribution \\(\hat{Z}\\) to color values \\(\hat{Y}\\) with function \\(\hat{Y} = \mathcal{H}(\hat{Z})\\).
+
+#### Class Rebalancing
+
+The distribution of ab values in natural images is strongly biased towards val- ues with low ab values, due to the appearance of backgrounds such as clouds, pavement. Observe that the number of pixels in natural images at desaturated values are orders of magnitude higher than for saturated values. Without accounting for this, the loss function is dominated by desaturated ab values. We account for the class-imbalance problem by reweighting the loss of each pixel at train time based on the pixel color rarity. This is asymptotically equivalent to the typical approach of resampling the training space. Each pixel is weighed by factor \\(w\in\mathcal{R}^Q\\), based on its closest ab bin.
+
+$$
+v(Z_{h,w}) = w_{q^*},\ where q^*=\arg \max_q Z_{h,w,q}\\
+w \propto \large( (1-\lambda) \tilde{p} + \frac{\lambda}{Q}\large)^{-1},\ \mathbb{E}[w] = \sum_q \tilde{p}_qw_q=1
+$$
+
+To obtain smoothed empirical distribution \\(p \in \Delta^Q\\), we estimate the empirical training set and smooth the distribution with a Gaussian kernel Gσ. We then mix the distribution with a uniform distribution with weight \\(\lambda \in [0,1]\\), take the reciprocal, and normalize so the weighting factor is 1 on expectation. We found that values of \\(\lambda = \frac{1}{2}\\) and \\(\sigma = 5\\) worked well.
+
+#### Class Probabilities to Point Estimates
+
+We define \\(\mathcal{H}\\) which maps the predicted distribution \\(\hat{Z}\\) to point estimate \\(\hat{Y}\\) in *ab* space. One choice is to take the mode of the predicted distribution for each pixel. This provides a vibrant but sometimes spatially inconsistent result. On the other hand, taking the mean of the predicted distribution produces spatially consistent but desaturated results. To try to get the best of both worlds, we interpolate by re-adjusting the temperature \\(T\\) of the softmax distribution, and taking the mean of the result. We draw inspiration from the simulated annealing technique, and thus refer to the operation as taking the annealed-mean of the distribution:
+
+$$
+\mathcal{H}(Z_{h,w}) =\mathbb{E}[f_T(Z_{h,w})], \ f_T(z)=\frac{\exp(\log(z)/T)}{\sum_q\exp(\log(z_q)/T)}
+$$
+
+Setting \\(T=1\\) leaves the distribution unchanged, lowering the temperature T produces a more strongly peaked distribution, and setting \\(T\rightarrow 0\\) results in a 1-hot encoding at the distribution mode. We found that temperature \\(T=0.38\\) captures the virancy of the mode while maintaining the spatial coherence of the mean.
+
+Our final system \\(\mathcal{F}\\) is the composition of CNN \\(\mathcal{G}\\), which produces a predicted distribution over all pixels, and the annealed-mean operation \\(\mathcal{H}\\), which produces a final prediction.
+
+![](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/20200522164605.png)
 
 ### Reference
 
 [^1]: Larsson, G., Maire, M., Shakhnarovich, G.: Learning representations for automatic colorization. European Conference on Computer Vision (2016)
 
-[^2]: Zhang, R., Isola, P., Efros, A.A.: Colorful image colorization. In: ECCV (2016)
+[^2]: Zhang, R., Isola, P., Efros, A.A.: Colorful image colorization. In: ECCV (2016) 

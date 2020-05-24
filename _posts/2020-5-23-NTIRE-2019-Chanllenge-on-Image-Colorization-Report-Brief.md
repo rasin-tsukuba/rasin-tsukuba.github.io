@@ -10,6 +10,7 @@ tags:
     - Computer Vision
     - Colorization
     - Deep Learning
+    - Competition Report
 ---
 
 > Header Image: Reddit: [Actress Yvonne Craig (she was Batgirl from the original Batman series)](https://www.reddit.com/r/Colorization/comments/goodf4/actress_yvonne_craig_she_was_batgirl_from_the/) 

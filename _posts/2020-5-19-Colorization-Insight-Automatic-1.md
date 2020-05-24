@@ -165,8 +165,17 @@ In particular, we compare RGB, YUV and Lab color spaces. In the case of RGB, the
 
 ![](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/20200521110209.png)
 
+**Baldassarre[^3] is highly similar to this paper.**
+
+
+
+
+
+
 ### Reference
 
 [^1]: Z. Cheng, Q. Yang, and B. Sheng, “Deep colorization,” in Proceedings of the IEEE International Conference on Computer Vision, 2015, pp. 415–423.
 
 [^2]: Iizuka, S., Simo-Serra, E., Ishikawa, H.: Let there be Color!: Joint End-to-end Learning of Global and Local Image Priors for Automatic Image Colorization with Simultaneous Classification. ACM Transactions on Graphics (Proc. of SIGGRAPH 2016) 35(4) (2016)
+
+[^3]: Baldassarre, F., Morín, D. G., & Rodés-Guirao, L. (2017). Deep Koalarization: Image Colorization using CNNs and Inception-ResNet-v2. June 2017, 1–12. 

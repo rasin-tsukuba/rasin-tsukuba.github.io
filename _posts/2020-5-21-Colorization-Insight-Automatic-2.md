@@ -1,18 +1,18 @@
 ---
-layout:     post
-title:      Colorization Insight Automatic 2
-subtitle:   Automatic Colorization Evolution
-date:       2020-05-21
-author:     Rasin
+layout: post
+title: Colorization Insight Automatic 2
+subtitle: Automatic Colorization Evolution
+date: 2020-05-21
+author: Rasin
 header-img: img/post-colorization-insight-5.jpg
 catalog: true
 tags:
-    - Computer Vision
-    - Colorization
-    - Deep Learning
+  - Computer Vision
+  - Colorization
+  - Deep Learning
 ---
 
-> Header Image: Reddit: [Actress Deborah Kerr -- promo shot for "From Here To Eternity" (1953)](https://www.reddit.com/r/Colorization/comments/gniu0q/actress_deborah_kerr_promo_shot_for_from_here_to/) 
+> Header Image: Reddit: [Actress Deborah Kerr -- promo shot for "From Here To Eternity" (1953)](https://www.reddit.com/r/Colorization/comments/gniu0q/actress_deborah_kerr_promo_shot_for_from_here_to/)
 
 # Evolution
 
@@ -26,7 +26,9 @@ Larsson [^1] has developed a fully automatic image colorization system. The syst
 
 Given a grayscale image patch \\(x \in \mathcal{x} = [0, 1]^{S\times S}, f\\) predicts the color \\(y \in \mathcal{y}\\) of its center pixel. The patch size \\(S \times S\\) is the receptive field of the colorizer. The output space \\(\mathcal{y}\\) depends on the choice of color parameterization.
 
-Skip-layer connections, which directly link low- and mid-level features to prediction layers, are an architectural addition beneficial for many image-to-image problems. We use the strategy which extracts per-pixel discriptors by reading localized slices of multiple layers and adopt the recently coined *hypercolumn* terminology for such slice.
+Skip-layer connections, which directly link low- and mid-level features to prediction layers, are an architectural addition beneficial for many image-to-image problems. We use the strategy which extracts per-pixel discriptors by reading localized slices of multiple layers and adopt the recently coined _hypercolumn_ terminology for such slice.
+
+![](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/20200526210657.png)
 
 ##### Color Space
 
@@ -39,7 +41,7 @@ For the representation of color predictions, using RGB is overdetermined, as lig
 
 ##### Loss
 
-A first consideratio is L2 regression in Lab:
+At first consideration is L2 regression in Lab:
 
 $$
 L_{reg}(x,y)=||f(x) - y||
@@ -51,11 +53,11 @@ $$
 L_{hist}(x,y)=D_{KL}(y||f(x))
 $$
 
-where *y* describes a histogram over \\(K\\) bins. The ground-truth histogram y is set as the empirical distribution in a rectangular region of size R around the center pixel. Somewhat surprisingly, our experiments see no benefit to predicting smoothed histograms, so we simply set R = 1. For histogram predictions, the last layer of neural network f is always a softmax.
+where _y_ describes a histogram over \\(K\\) bins. The ground-truth histogram y is set as the empirical distribution in a rectangular region of size R around the center pixel. Somewhat surprisingly, our experiments see no benefit to predicting smoothed histograms, so we simply set R = 1. For histogram predictions, the last layer of neural network f is always a softmax.
 
 We bin the Lab axes by evenly spaced Gaussian quantiles (µ = 0, σ = 25). They can be encoded separately for a and b (as marginal distributions), in which case our loss becomes the sum of two separate terms. They can also be encoded as a joint distribution over a and b, in which case we let the quantiles form a 2D grid of bins. In our experiments, we set K = 32 for marginal distributions and K = 16 × 16 for joint. We determined these numbers, along with σ, to offer a good compromise of output fidelity and output complexity.
 
-For hue/chroma, we only consider marginal distributions and bin axes uniformly in [0, 1]. Since hue becomes unstable as chroma approaches zero, we add a sample weight to the hue based on the chroma: 
+For hue/chroma, we only consider marginal distributions and bin axes uniformly in [0, 1]. Since hue becomes unstable as chroma approaches zero, we add a sample weight to the hue based on the chroma:
 
 $$
 L_{hue/chroma}(x,y) = D_{KL}(y_C||f_C(x)) + \lambda_H y_C D_{KL}(y_H||f_H(x))
@@ -65,12 +67,12 @@ where \\(y_C\\) is the sample pixel's chroma. We set \\(\lambda_H=5\\), roughly 
 
 #### Inference
 
-For the L2 loss, all that remains is to combine each \\(\hat{y}_n\\) with the respective lightness and convert to RGB. With histogram predictions, we consider options for inferring a final color:
+For the L2 loss, all that remains is to combine each \\(\hat{y}\_n\\) with the respective lightness and convert to RGB. With histogram predictions, we consider options for inferring a final color:
 
 - Sample: Draw a sample from the histogram. If done per pixel, this may create high-frequency color changes in areas of high-entropy histograms.
-– Mode: Take the \\(\arg\max_k \hat{y}_{n,k}\\) as the color. This can create jarring transitions between colors, and is prone to vote splitting for proximal centroids.
-– Median: Compute cumulative sum of \\(\hat{y}_n\\) and use linear interpolation to find the value at the middle bin. Undefined for circular histograms, such as hue. 
-– Expectation: Sum over the color bin centroids weighted by the histogram.
+- Mode: Take the \\(\arg\max*k \hat{y}*{n,k}\\) as the color. This can create jarring transitions between colors, and is prone to vote splitting for proximal centroids.
+- Median: Compute cumulative sum of \\(\hat{y}\_n\\) and use linear interpolation to find the value at the middle bin. Undefined for circular histograms, such as hue.
+- Expectation: Sum over the color bin centroids weighted by the histogram.
 
 For Lab output, we achieve the best qualitative and quantitative results using expectations. For hue/chroma, the best results are achieved by taking the median of the chroma. Many objects can appear both with and without chroma, which means \\(C = 0\\) is a particularly common bin. This mode draws the expectation closer to zero, producing less saturated images. As for hue, since it is circular, we first compute the complex expectation:
 
@@ -85,7 +87,7 @@ high and z is close to zero, the instability of the hue can create artifacts. A 
 
 #### Neural network architecture and training
 
-The base network is a fully convolutional version of VGG-16 with two changes: 
+The base network is a fully convolutional version of VGG-16 with two changes:
 
 1.  the classification layer (fc8) is discarded
 2.  the first filter layer (conv1 1) operates on a single intensity channel instead of mean-subtracted RGB.
@@ -116,11 +118,11 @@ $$
 L_2(\hat{Y}, Y) = \frac{1}{2}\sum_{h,w}||Y_{h,w}-\hat{Y}_{h,w}||_2^2
 $$
 
-However, this loss is not robust to the inherent ambiguity and multimodal nature of the colorization problem. If an object can take on a set of distinct *ab* values, the **optimal solution to the Euclidean loss will be the mean of the set**. In color prediction, this averaging **effect favors grayish**, desaturated results. Additionally, if the set of plausible colorizations is non-convex, the solution will **in fact be out of the set**, giving implausible results.
+However, this loss is not robust to the inherent ambiguity and multimodal nature of the colorization problem. If an object can take on a set of distinct _ab_ values, the **optimal solution to the Euclidean loss will be the mean of the set**. In color prediction, this averaging **effect favors grayish**, desaturated results. Additionally, if the set of plausible colorizations is non-convex, the solution will **in fact be out of the set**, giving implausible results.
 
-Instead, we treat the problem as multinomial classification. We quantize the *ab* output space into bins with grid size 10 and keep the Q = 313 values which are in-gamut. For a given input \\(X\\), we learn a mapping \\(\hat{Z}=\mathcal{G}(X)\\) to a probability distribution over possible color \\(\hat{Z} \in [0, 1]^{H\times W\times Q}\\), where *Q* is the number of quantized ab values.
+Instead, we treat the problem as multinomial classification. We quantize the _ab_ output space into bins with grid size 10 and keep the Q = 313 values which are in-gamut. For a given input \\(X\\), we learn a mapping \\(\hat{Z}=\mathcal{G}(X)\\) to a probability distribution over possible color \\(\hat{Z} \in [0, 1]^{H\times W\times Q}\\), where _Q_ is the number of quantized ab values.
 
-To compare predicted \\(\hat{Z}\\) against ground truth, we define function \\(\hat{Z}=\mathcal{H}_{gt}^{-1}(Y)\\), which converts ground truth color *Y* to vector *Z*, using a soft-encoding scheme.
+To compare predicted \\(\hat{Z}\\) against ground truth, we define function \\(\hat{Z}=\mathcal{H}\_{gt}^{-1}(Y)\\), which converts ground truth color _Y_ to vector _Z_, using a soft-encoding scheme.
 
 For soft-enconding scheme:
 
@@ -147,7 +149,7 @@ To obtain smoothed empirical distribution \\(p \in \Delta^Q\\), we estimate the 
 
 #### Class Probabilities to Point Estimates
 
-We define \\(\mathcal{H}\\) which maps the predicted distribution \\(\hat{Z}\\) to point estimate \\(\hat{Y}\\) in *ab* space. One choice is to take the mode of the predicted distribution for each pixel. This provides a vibrant but sometimes spatially inconsistent result. On the other hand, taking the mean of the predicted distribution produces spatially consistent but desaturated results. To try to get the best of both worlds, we interpolate by re-adjusting the temperature \\(T\\) of the softmax distribution, and taking the mean of the result. We draw inspiration from the simulated annealing technique, and thus refer to the operation as taking the annealed-mean of the distribution:
+We define \\(\mathcal{H}\\) which maps the predicted distribution \\(\hat{Z}\\) to point estimate \\(\hat{Y}\\) in _ab_ space. One choice is to take the mode of the predicted distribution for each pixel. This provides a vibrant but sometimes spatially inconsistent result. On the other hand, taking the mean of the predicted distribution produces spatially consistent but desaturated results. To try to get the best of both worlds, we interpolate by re-adjusting the temperature \\(T\\) of the softmax distribution, and taking the mean of the result. We draw inspiration from the simulated annealing technique, and thus refer to the operation as taking the annealed-mean of the distribution:
 
 $$
 \mathcal{H}(Z_{h,w}) =\mathbb{E}[f_T(Z_{h,w})], \ f_T(z)=\frac{\exp(\log(z)/T)}{\sum_q\exp(\log(z_q)/T)}
@@ -162,5 +164,4 @@ Our final system \\(\mathcal{F}\\) is the composition of CNN \\(\mathcal{G}\\), 
 ### Reference
 
 [^1]: Larsson, G., Maire, M., Shakhnarovich, G.: Learning representations for automatic colorization. European Conference on Computer Vision (2016)
-
-[^2]: Zhang, R., Isola, P., Efros, A.A.: Colorful image colorization. In: ECCV (2016) 
+[^2]: Zhang, R., Isola, P., Efros, A.A.: Colorful image colorization. In: ECCV (2016)

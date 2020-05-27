@@ -77,7 +77,7 @@ In the L* a* b* color space, L* indicates lightness and a* and b* are chromatici
 
 Apple in Lab. The photo is from Konica Minolta.
 
-Aditya [^2], Lal [^3], Baldassarre[^4], Royer[^5], Zhang [^6] [^7], Larsson [^8] [^9], Deshpande [^13], Ozbulak[^15], Vitoria[^16], Nguyen-Quynh[^17] and Iitsuka[^18] all use Lab as their training and inferencing color space.
+Aditya [^2], Lal [^3], Baldassarre[^4], Royer[^5], Zhang [^6] [^7], Larsson [^8] [^9], Deshpande [^13], Ozbulak[^15], Vitoria[^16], Nguyen-Quynh[^17], Iitsuka[^18] and Su[^19] all use Lab as their training and inferencing color space.
 
 ## Comparison on Color Space
 
@@ -97,13 +97,15 @@ and YUV.
 
 Most colorization problem can be form into this equation: Given a set of \\(\Lambda=\{\overrightarrow{G}, \overrightarrow{C}\}\\), where \\(\overrightarrow{G}\\) are grayscale images and \\(\overrightarrow{C}\\) are corresponding color images respectively, the method is based on a premise: there exists a complex gray-to-color mapping function \\(\mathcal{F}\\) that can map the features extracted at each pixel in \\(\overrightarrow{G}\\) to the corresponding chrominance values in \\(\overrightarrow{C}\\). We aim at learning such a mapping function from \\(\Lambda\\) so that the conversion from a new gray image to color image can be achieved by using \\(\mathcal{F}\\).
 
-## Fully Connected
+## non-Generative
+
+### Fully Connected
 
 Cheng [^1] maybe the first one propose an automatic colorization method using neural network. In the early stage of deep learning, feature extraction are mostly borrowed from traditional computer vision. The network structure is also based on fully connected layers, which means there are no convolution or other filters. In his model, the number of neurons in the input layer is equal to the dimension of the feature descriptor extracted from each pixel location in a grayscale image and the output layer has two neurons which output the U and V channels of the corresponding color value, respectively. He perceptually set the number of neurons in the hidden layer to half of that in the input layer. Each neuron in the hidden or output layer is connected to all the neurons in the proceeding layer and each connection is associated with a weight.
 
 ![](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/1.png)
 
-### Feature Descriptor
+#### Feature Descriptor
 
 1. Low-level Patch Feature:
    the array containing the sequential grayscale values in a 7×7 patch center at pixel _p_.
@@ -114,7 +116,7 @@ Cheng [^1] maybe the first one propose an automatic colorization method using ne
 3. High-level Semantic Feature:
    He adopted the state-of-art scene parsing algorithm to annotate each pixel with its category label, and obtain a semantic map for the input image.
 
-## End-to-End Convolution + Fully Connected
+### End-to-End Convolution + Fully Connected
 
 Iizuka & Simo-Serra[^18] propose a network that concatenates two separate paths, specializing in global and local features, respectively. They called it Joint Global and Local Model, which means the network is formed by several subcomponents that form a Directed Acyclic Graph (DAG) and contain important discrepancies with widely-used standard models. In particular:
 
@@ -133,7 +135,7 @@ Zhang [^7] implemented a CNN to map from a grayscale input to a distribution ove
 The system is not quite end-to-end trainable, but note that the mapping H operates on each pixel independently, with a single parameter,and can be implemented as part of a feed-forward pass of the CNN. The network was trained from scratch with k-means initialization, using the ADAM solver for
 approximately 450k iterations.
 
-## Fully Convolution
+### Fully Convolution
 
 Larsson [^8] proposed a fully convolution version of VGG-16 with two changes:
 
@@ -144,7 +146,7 @@ He extract a hypercolumn descriptor for a pixel by concatenating the features at
 
 ![](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/20200526210657.png)
 
-## Multi-Network 
+### Multi-Network 
 
 Guadarrama [^12] propose a new method that employs a PixelCNN probabilistic model to produce a coherent joint distribution over color images given a grayscale input.
 
@@ -158,8 +160,36 @@ The refinement network is trained on a 28x28 downsampling of the ground truth ch
 
 ![](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/20200524102310.png)
 
+### Multi-Module Network
 
-## VAE (Variation Autoencoder)
+Su proposed both instance colorization network and full-image colorization network. The two networks share the same architecture but different weights.
+
+First, we leverage an off-the-shelf pre-trained object detector to obtain multiple object bounding boxes \\(\{B_i\}^N_{i=1}\\) from the grayscale image, where \\(N\\) is the number of instances. We then generate a set of instance images \\(\{X_i\}^N_{i=1}\\) by resizing the images
+cropped from the grayscale image using the detected bounding boxes. Next, we feed each instance image \\(X_i\\) and input grayscale image \\(X\\) to the instance colorization network and full-image colorization network, respectively. Finally, we employ a fusion module that fuses all the instance features with the full-image feature at each layer. This step repeats until the last layer and ob- tains the predict color image \\(Y\\).
+
+We adopt a sequential approach that first trains the full-image network, followed by the instance network, and finally trains the feature fusion module by freezing the above two networks.
+
+![](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/20200527192037.png)
+
+In this work, we adopt the main colorization network introduced in Zhang [^20] as our backbones.
+
+The fusion module is shown below
+
+![](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/20200527194756.png)
+
+## Generative Model
+
+### Autoencoder
+
+Zhang [^6] propose split-brain autoencoder architecture for unsupervised representation learning.
+
+![](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/20200527102626.png)
+
+Here is an application on colorization:
+
+![](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/20200527102929.png)
+
+### VAE (Variation Autoencoder)
 
 Deshpande [^2] proposed that a natural approach to solve the problem is to learn a conditional model \\(P(C|G)\\) for a color field \\(C\\) conditioned on the input grey-level image \\(G\\). We can then draw samples from this conditional model \\({C_k}^N_{k=1} ~ P(C|G)\\) to obtain diverse colorizations. 
 
@@ -173,7 +203,24 @@ Deshpande's strategy is to represent \\(C\\) by its low-dimensional latent varia
 
 He leveraged a Mixture Density Network (MDN) to learn a multi-modal conditional model \\(P(z|G)\\). MDN can get a Gaussian Mixture Model (GMM) that generates the low-dimensional embedding. In testing procesdure, he used the VAE decoder to generate the corresponding diverse color fields.
 
-## GAN
+### GAN
+
+#### Single-Module GAN
+Cao [^11] used conditional GANs to generate diverse colorization for a single grayscale image while maintaining their reality. Conditional GAN is a much more suitable framework to handle diverse colorization than other CNNs. Meanwhile, as the discriminator only needs the signal of whether a training instance is real or generated, which is directly provided without any human annotation during the training phase, the task is in an unsupervised learning fashion.
+
+We build a fully convolutional generator and each convolutional layer is splinted by a concatenate layer to continuously render the conditional grayscale information. Additionally, to maintain the spatial information, we set all convo- lution stride to 1 to avoid downsizing data. We also concatenate noise channels to the first half convolutional layers of the generator to attain more diversity in the color image generation process. As the generator G would capture the color distribution, we can alter the colorization result by changing the input noise.
+
+Traditional GANs and conditional GANs receive noise information at the very start layer, during the continuous data transformation through the network, the noise information is attenuated a lot. To overcome this problem and make the colorization results more diversified, he concatenated the noise channel onto the first half of the generator layers (the first three layers in our case).
+
+![](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/20200527102119.png)
+
+#### Multi-Module GAN
+
+Vitoria [^16] proposed the ChromaGAN. It contains three distinct parts. The first two, belonging to the genera- tor, focus on geometrically and semantically generating a color image information (a, b) and classifying its semantic content. The third one belongs to the discriminator network learning to distinguish between real and fake data.
+
+![](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/20200527110608.png)
+
+*The generator is similar to Iitsuka's model architecture.*
 
 # Objective Function
 
@@ -193,6 +240,20 @@ Additionally, if the set of plausible colorizations is non-convex, the solution 
 in fact be out of the set, giving implausible results.
 
 Cheng [^1], Iizuka & Simo-Serra[^18] used it as the basic colorization loss.
+
+### smooth-L1 loss (Huber loss) 
+
+Zhang [^20] proposed the smooth-L1 loss with δ = 1:
+
+$$
+l_\delta(x,y)=\frac{1}{2}(x-y)^2 \mathbb{1}_{\{|x-y|<\delta\}}+\delta(|x-y|-\frac{1}{2}\sigma)  \mathbb{1}_{\{|x-y|\geq\delta\}}
+$$
+
+The original huber loss is:
+
+![](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/20200527195244.png)
+
+When \\(\delta\\) approching 0, huber loss will be MAE; Otherwise, huber loss will be MSE.
 
 ### KL Divergence
 
@@ -235,7 +296,7 @@ $$
 
 where \\(v(\cdot)\\) is a weighting term that can be used to rebalance the loss based on color-class rarity. Finally, we map probability distribution \\(\hat{Z}\\) to color values \\(\hat{Y}\\) with function \\(\hat{Y} = \mathcal{H}(\hat{Z})\\).
 
-We account for the class imbalance problem by re-weighting the loss of each pixel at train time based on the pixel color rarity. Each pixel is weighed by factor \\(w\inR^Q\\), based on its closest ab bin.
+We account for the class imbalance problem by re-weighting the loss of each pixel at train time based on the pixel color rarity. Each pixel is weighed by factor \\(w\in R^Q\\), based on its closest ab bin.
 
 $$
 v(Z_{h,w}) = w_{q^*},\ where q^*=\arg \max_q Z_{h,w,q}\\
@@ -244,7 +305,7 @@ $$
 
 To obtain smoothed empirical distribution \\(p \in \Delta^Q\\), we estimate the empirical training set and smooth the distribution with a Gaussian kernel \\(G\sigma \\). He then mix the distribution with a uniform distribution with weight \\(\lambda \in [0,1]\\), take the reciprocal, and normalize so the weighting factor is 1 on expectation. He found that values of \\(\lambda = \frac{1}{2}\\) and \\(\sigma = 5\\) worked well.
 
-He defined \\(\mathcal(H)\\), which maps the predicted distribution \\(\hat(Z)) to point estimate \\(\hat(Y)\\) in ab space. One choice is to take the mode of the predicted distribution for each pixel. On the other hand, takeing the mean of the predicted distribution, but desaturated result. To try to get the best of both worlds, we interpolate by re-adjusting the temperature \\(T\\) of the softmax distribution, and taking the mean of the result. 
+He defined \\(\mathcal(H)\\), which maps the predicted distribution \\(\hat(Z)\\) to point estimate \\(\hat(Y)\\) in ab space. One choice is to take the mode of the predicted distribution for each pixel. On the other hand, takeing the mean of the predicted distribution, but desaturated result. To try to get the best of both worlds, we interpolate by re-adjusting the temperature \\(T\\) of the softmax distribution, and taking the mean of the result. 
 
 $$
 \mathcal{H}(Z_{h,w}) =\mathbb{E}[f_T(Z_{h,w})], \ f_T(z)=\frac{\exp(\log(z)/T)}{\sum_q\exp(\log(z_q)/T)}
@@ -264,8 +325,6 @@ where \\(y(i,r\\) is the Cr value for pixel i, and \\(y(i,b)\\) is the Cb value.
 
 We train this model using maximum likelihood, with a cross-entropy loss per pixel. Because of the sequential nature of the model, each prediction is conditioned on previous pixels. 
 
-## Perceptual Loss
-
 ## VAE loss
 
 ### Decoder loss
@@ -283,6 +342,58 @@ Loss comparison：
 ![](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/20200526220348.png)
 
 ## GAN loss
+
+### Pure GAN loss
+
+The objective of a GAN can be expressed as
+
+$$
+\mathcal{L}_{GAN}(G,D)=\mathbb{E}_{x~P_{data}(x)}[\log D(x)] + \mathbb{E}_{z~P_z(z)}[\log (1-D(G(z)))]
+$$
+
+### Conditional GAN loss
+
+while the objective of a conditional GAN is
+
+$$
+\mathcal{L}_{cGAN}(G,D)=\mathbb{E}_{x~P_{data}(x)}[\log D(x)] + \mathbb{E}_{y~P_{gray}(y), z~P_z(z)}[\log (1-D(G(y,z)))]
+$$
+
+where G tries to minimize this objective against an adversarial D that tries to maximize it
+
+$$
+G^* = \arg \min_G \max_D \mathcal{L}_{cGAN}(G,D)
+$$
+
+Without z, the generator could still learn a mapping from y to x, but would produce deterministic outputs.
+
+### GAN loss combination
+
+Vitoria [^16] proposed ChromaGAN which contains multipal loss. The generator model combines two different modules. So there will be \\(G_{\theta 1}^1, G_{\theta 2}^2\\) Its objective loss is defined by:
+
+$$
+\mathcal{L}(G_\theta, D_w)=\mathcal{L}_e(G_{\theta 1}^1)+ \lambda_g \mathcal{L}_g(G_{\theta 1}^1, D_w) + \lambda_s\mathcal{L}(G_{\theta 2}^2)
+$$
+
+The first term denotes the color error loss, using Euclidean Loss.
+
+The last item is
+
+$$
+\mathcal{L}_s(G_{\theta 2}^2)=\mathbb{E}_{L~\mathbb{P}_{rg}}[KL(y_v||G_{theta 2}^2(L))]
+$$
+
+denotes the class distribution loss, where \\(\mathbb{P}_{rg\\) denotes the distribution of grayscale input images, and \\(y_v\\) the output distribution vector of a pre-trained VGG-16 model applied to the grayscale image.
+
+Finally, \\(L_g\\) denotes the WGAN loss which consists of an adversarial Wasserstein GAN loss. Leverage the WGAN instead of other GAN losses favours nice properties such as avoiding vanishing gradients and mode collapse, and achieves more stable training.
+
+$$
+\mathcal{L}_g(G_{\theta 1}^1, D_w) = \mathbb{E}_{\tilde{I}~\mathbb{P}_r}[D_w(\tilde{I})] \\
+-\mathbb{E}_{(a,b)~\mathbb{P}_G_{\theta 1}^1}[D_w(L,a,b)]\\
+-\mathbb{E}_{\tilde{I}~\mathbb{P}_\tilde{I}}[(||\triangledown_\tilde{I} D_w(\tilde{I})||_2 -1)^2]
+$$
+
+where \\(\mathbb{P}_G_{\theta 1}^1}\\) is the model distribution of \\(G_{\theta 1}^1}(L)\\), with \\(L~\mathbb{P}_{rg}\\). \\(\mathbb{P}_{\tilde{I}}\\) is implicitly defined sampling uniformly along striaight line between pairs of points sampled from the data distribution \\(\mathbb{P}_r\\) and the generator distribution
 
 # Evaluation Methods
 
@@ -319,9 +430,7 @@ Iizuka & Simo-Serra[^18] has performed a user study asking the question “Does 
 
 Richard [^7] ran a real vs. fake two-alternative forced choice experiment on Amazon Mechanical Turk (AMT).
 
-### 
-
-### Reference
+# Reference
 
 [^1]: Cheng, Z., Yang, Q., & Sheng, B. (2015). Deep colorization. Proceedings of the IEEE International Conference on Computer Vision, 2015 Inter, 415–423. https://doi.org/10.1109/ICCV.2015.55
 [^2]: Deshpande, A., Lu, J., Yeh, M. C., Chong, M. J., & Forsyth, D. (2017). Learning diverse image colorization. Proceedings - 30th IEEE Conference on Computer Vision and Pattern Recognition, CVPR 2017, 2017-Janua, 2877–2885. https://doi.org/10.1109/CVPR.2017.307
@@ -341,3 +450,6 @@ Richard [^7] ran a real vs. fake two-alternative forced choice experiment on Ama
 [^16]: Vitoria, P., Raad, L., & Ballester, C. (2019). ChromaGAN: Adversarial Picture Colorization with Semantic Class Distribution. 2445–2454. http://arxiv.org/abs/1907.09837
 [^17]: Nguyen-Quynh, T. T., Do, N. T., & Kim, S. H. (2020). MLEU: Multi-level embedding u-net for fully automatic image colorization. ACM International Conference Proceeding Series, 119–121. https://doi.org/10.1145/3380688.3380720
 [^18]: Iizuka, S., Simo-Serra, E., & Ishikawa, H. (2016). Let there be color! ACM Transactions on Graphics, 35(4), 1–11. https://doi.org/10.1145/2897824.2925974
+[^19]: Su, J.-W., Chu, H.-K., & Huang, J.-B. (2020). Instance-aware Image Colorization. http://arxiv.org/abs/2005.10825
+
+[^20]: Zhang, R., Zhu, J. Y., Isola, P., Geng, X., Lin, A. S., Yu, T., & Efros, A. A. (2017). Real-time user-guided image colorization with learned deep priors. ACM Transactions on Graphics, 36(4). https://doi.org/10.1145/3072959.3073703

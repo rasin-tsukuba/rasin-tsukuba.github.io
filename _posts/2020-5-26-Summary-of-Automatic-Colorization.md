@@ -57,7 +57,7 @@ Zhu [^14] use RGB as his training color space.
 
 ## HSL
 
-Hue-based spaces, such as HSL, can be thought of as a color cylinder, with angular coordinate H (hue), radial distance S (saturation), and height L (lightness). The values of S and H are unstable at the bot- tom (black) and top (white) of the cylinder. HSV describes a similar color cylinder which is only unstable at the bottom. However, L is no longer one of the channels. We wish to avoid both instabilities and still retain L as a channel. The solution is a color bicone, where chroma (C) takes the place of saturation.
+Hue-based spaces, such as HSL, can be thought of as a color cylinder, with angular coordinate H (hue), radial distance S (saturation), and height L (lightness). The values of S and H are unstable at the bottom (black) and top (white) of the cylinder. HSV describes a similar color cylinder which is only unstable at the bottom. However, L is no longer one of the channels. He wish to avoid both instabilities and still retain L as a channel. The solution is a color bicone, where chroma (C) takes the place of saturation.
 
 ![](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/20200526110503.png)
 
@@ -84,7 +84,7 @@ Aditya [^2], Lal [^3], Baldassarre[^4], Royer[^5], Zhang [^6] [^7], Larsson [^8]
 Iitsuka[^18] has compared the effect of using various color spaces. In particular,
 they compare RGB, YUV and L* a* b* color spaces. 
 
-In the case of RGB, the output of the model is 3 instead of 2 corresponding to the red, green and blue channels. We train directly using the RGB values; however, for testing, we convert the RGB image to YUV and substitute the input grayscale image as the Y channel of the image. This ensures that the output images of all the models have
+In the case of RGB, the output of the model is 3 instead of 2 corresponding to the red, green and blue channels. He trained directly using the RGB values; however, for testing, he converted the RGB image to YUV and substitute the input grayscale image as the Y channel of the image. This ensures that the output images of all the models have
 the same luminance. For all different color spaces, they normalize the values to lie in the [0, 1] range of the Sigmoid transfer function of the output layer.
 
 ![](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/20200521110209.png)
@@ -142,7 +142,7 @@ Larsson [^8] proposed a fully convolution version of VGG-16 with two changes:
 1. the classification layer (fc8) is discarded
 2. the first filter layer (conv1_1) operates on a single intensity channel instead of mean-subtracted RGB.
 
-He extract a hypercolumn descriptor for a pixel by concatenating the features at its spatial location in all layers, from data to conv7 (fc7), resulting in a 12417 channel descriptor. He fed this hypercolumn into a fully connected layer with 1024 channels (h fc1 in Figure 2), to which we connect output predictors.
+He extract a hypercolumn descriptor for a pixel by concatenating the features at its spatial location in all layers, from data to conv7 (fc7), resulting in a 12417 channel descriptor. He fed this hypercolumn into a fully connected layer with 1024 channels (h fc1 in Figure 2), to which he connected output predictors.
 
 ![](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/20200526210657.png)
 
@@ -156,7 +156,7 @@ That is, he turned colorization into a **sequential decision making task**, wher
 
 After chrominance of low resolution images, he used bilinear interpolation for upsampling instead of learned upsampling.
 
-The refinement network is trained on a 28x28 downsampling of the ground truth chroma images. The reason we do not train it end-to-end with the PixelCNN is the following: the PixelCNN can generate multiple samples, all of which might be quite far from the true chroma image; if we forced the refinement network to map these to the true RGB image, it might learn to ignore these “irrelevant” color “hints”, and just use the input grayscale image. By contrast, when we train using the true low-resolution chroma images, we force the refinement network to focus its efforts on learning how to combine these “hints” with the edge boundaries which are encoded in the grayscale image.
+The refinement network is trained on a 28x28 downsampling of the ground truth chroma images. The reason he did not train it end-to-end with the PixelCNN is the following: the PixelCNN can generate multiple samples, all of which might be quite far from the true chroma image; if he forced the refinement network to map these to the true RGB image, it might learn to ignore these “irrelevant” color “hints”, and just use the input grayscale image. By contrast, when he trained using the true low-resolution chroma images, he forced the refinement network to focus its efforts on learning how to combine these “hints” with the edge boundaries which are encoded in the grayscale image.
 
 ![](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/20200524102310.png)
 
@@ -164,14 +164,14 @@ The refinement network is trained on a 28x28 downsampling of the ground truth ch
 
 Su proposed both instance colorization network and full-image colorization network. The two networks share the same architecture but different weights.
 
-First, we leverage an off-the-shelf pre-trained object detector to obtain multiple object bounding boxes \\(\{B_i\}^N_{i=1}\\) from the grayscale image, where \\(N\\) is the number of instances. We then generate a set of instance images \\(\{X_i\}^N_{i=1}\\) by resizing the images
-cropped from the grayscale image using the detected bounding boxes. Next, we feed each instance image \\(X_i\\) and input grayscale image \\(X\\) to the instance colorization network and full-image colorization network, respectively. Finally, we employ a fusion module that fuses all the instance features with the full-image feature at each layer. This step repeats until the last layer and ob- tains the predict color image \\(Y\\).
+First, he leveraged an off-the-shelf pre-trained object detector to obtain multiple object bounding boxes \\(\{B_i\}^N_{i=1}\\) from the grayscale image, where \\(N\\) is the number of instances. He then generate a set of instance images \\(\{X_i\}^N_{i=1}\\) by resizing the images
+cropped from the grayscale image using the detected bounding boxes. Next, he fed each instance image \\(X_i\\) and input grayscale image \\(X\\) to the instance colorization network and full-image colorization network, respectively. Finally, he employed a fusion module that fuses all the instance features with the full-image feature at each layer. This step repeats until the last layer and ob- tains the predict color image \\(Y\\).
 
-We adopt a sequential approach that first trains the full-image network, followed by the instance network, and finally trains the feature fusion module by freezing the above two networks.
+He adopt a sequential approach that first trains the full-image network, followed by the instance network, and finally trains the feature fusion module by freezing the above two networks.
 
 ![](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/20200527192037.png)
 
-In this work, we adopt the main colorization network introduced in Zhang [^20] as our backbones.
+In this work, he adopt the main colorization network introduced in Zhang [^20] as our backbones.
 
 The fusion module is shown below
 
@@ -191,24 +191,27 @@ Here is an application on colorization:
 
 ### VAE (Variation Autoencoder)
 
-Deshpande [^2] proposed that a natural approach to solve the problem is to learn a conditional model \\(P(C|G)\\) for a color field \\(C\\) conditioned on the input grey-level image \\(G\\). We can then draw samples from this conditional model \\({C_k}^N_{k=1} ~ P(C|G)\\) to obtain diverse colorizations. 
+Deshpande [^2] proposed that a natural approach to solve the problem is to learn a conditional model \\(P(C|G)\\) for a color field \\(C\\) conditioned on the input grey-level image \\(G\\).
+
+He can then draw samples from this conditional model \\({C_k}^N_{k=1} ~ P(C|G)\\) to obtain diverse colorizations. 
 
 The overall architecture of the network he proposed:
 
 ![](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/20200526214402.png)
 
-Deshpande's strategy is to represent \\(C\\) by its low-dimensional latent variable embedding \\(z\\). This embedding is learned by a generative model VAE.The encoder network is roughly the mirror of decoder network, as per the standard practice for autoencoder networks.
+Deshpande's strategy is to represent \\(C\\) by its low-dimensional latent variable embedding \\(z\\). This embedding is learned by a generative model VAE.The encoder network is roughly the mirror of decoder network.
 
 ![](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/20200526214655.png)
 
-He leveraged a Mixture Density Network (MDN) to learn a multi-modal conditional model \\(P(z|G)\\). MDN can get a Gaussian Mixture Model (GMM) that generates the low-dimensional embedding. In testing procesdure, he used the VAE decoder to generate the corresponding diverse color fields.
+He leveraged a Mixture Density Network (MDN) to learn a multi-modal conditional model \\(P(z|G)\\).
+MDN can get a Gaussian Mixture Model (GMM) that generates the low-dimensional embedding. In testing procesdure, he used the VAE decoder to generate the corresponding diverse color fields.
 
 ### GAN
 
 #### Single-Module GAN
 Cao [^11] used conditional GANs to generate diverse colorization for a single grayscale image while maintaining their reality. Conditional GAN is a much more suitable framework to handle diverse colorization than other CNNs. Meanwhile, as the discriminator only needs the signal of whether a training instance is real or generated, which is directly provided without any human annotation during the training phase, the task is in an unsupervised learning fashion.
 
-We build a fully convolutional generator and each convolutional layer is splinted by a concatenate layer to continuously render the conditional grayscale information. Additionally, to maintain the spatial information, we set all convo- lution stride to 1 to avoid downsizing data. We also concatenate noise channels to the first half convolutional layers of the generator to attain more diversity in the color image generation process. As the generator G would capture the color distribution, we can alter the colorization result by changing the input noise.
+He build a fully convolutional generator and each convolutional layer is splinted by a concatenate layer to continuously render the conditional grayscale information. Additionally, to maintain the spatial information, he set all convo- lution stride to 1 to avoid downsizing data. He also concatenate noise channels to the first half convolutional layers of the generator to attain more diversity in the color image generation process. As the generator G would capture the color distribution, he can alter the colorization result by changing the input noise.
 
 Traditional GANs and conditional GANs receive noise information at the very start layer, during the continuous data transformation through the network, the noise information is attenuated a lot. To overcome this problem and make the colorization results more diversified, he concatenated the noise channel onto the first half of the generator layers (the first three layers in our case).
 
@@ -265,7 +268,7 @@ $$
 
 where *y* describes a histogram over \\(K\\) bins. The ground-truth histogram y is set as the empirical distribution in a rectangular region of size R around the center pixel.We simply set R = 1. For histogram predictions, the last layer of neural network f is always a softmax.
 
-We bin the Lab axes by evenly spaced Gaussian quantiles (µ = 0, σ = 25). They can be encoded separately for a and b (as marginal distributions), in which case our loss becomes the sum of two separate terms. They can also be encoded as a joint distribution over a and b, in which case we let the quantiles form a 2D grid of bins. In our experiments, we set K = 32 for marginal distributions and K = 16 × 16 for joint. We determined these numbers, along with σ, to offer a good compromise of output fidelity and output complexity.
+He bin the Lab axes by evenly spaced Gaussian quantiles (µ = 0, σ = 25). They can be encoded separately for a and b (as marginal distributions), in which case our loss becomes the sum of two separate terms. They can also be encoded as a joint distribution over a and b, in which case he let the quantiles form a 2D grid of bins. In our experiments, he set K = 32 for marginal distributions and K = 16 × 16 for joint. He determined these numbers, along with σ, to offer a good compromise of output fidelity and output complexity.
 
 ## Classification
 
@@ -280,7 +283,7 @@ $$
 
 ### Multinomial Classification
 
-Zhang [^7] treated the colorization problem as multinomial classification. Instead, he treat the problem as multinomial classification. We quantize the *ab* output space into bins with grid size 10 and keep the Q = 313 values which are in-gamut. For a given input \\(X\\), we learn a mapping \\(\hat{Z}=\mathcal{G}(X)\\) to a probability distribution over possible color \\(\hat{Z} \in [0, 1]^{H\times W\times Q}\\), where *Q* is the number of quantized ab values.
+Zhang [^7] treated the colorization problem as multinomial classification. Instead, he treat the problem as multinomial classification. He quantized the *ab* output space into bins with grid size 10 and keep the Q = 313 values which are in-gamut. For a given input \\(X\\), he learned a mapping \\(\hat{Z}=\mathcal{G}(X)\\) to a probability distribution over possible color \\(\hat{Z} \in [0, 1]^{H\times W\times Q}\\), where *Q* is the number of quantized ab values.
 
 To compare predicted \\(\hat{Z}\\) against ground truth, we define function \\(\hat{Z}=\mathcal{H}_{gt}^{-1}(Y)\\), which converts ground truth color *Y* to vector *Z*, using a soft-encoding scheme.
 
@@ -288,30 +291,30 @@ For soft-enconding scheme:
 
 ![](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/20200522102840.png)
 
-We then use multinomial cross entropy loss:
+He then used multinomial cross entropy loss:
 
 $$
 L_{cl}(\hat{Z}, Z) = -\sum_{h,w}v(Z_h, w)\sum_q Z_{h,w,q} \log(\hat{Z}_{h,w,q})
 $$
 
-where \\(v(\cdot)\\) is a weighting term that can be used to rebalance the loss based on color-class rarity. Finally, we map probability distribution \\(\hat{Z}\\) to color values \\(\hat{Y}\\) with function \\(\hat{Y} = \mathcal{H}(\hat{Z})\\).
+where \\(v(\cdot)\\) is a weighting term that can be used to rebalance the loss based on color-class rarity. Finally, he mapped probability distribution \\(\hat{Z}\\) to color values \\(\hat{Y}\\) with function \\(\hat{Y} = \mathcal{H}(\hat{Z})\\).
 
-We account for the class imbalance problem by re-weighting the loss of each pixel at train time based on the pixel color rarity. Each pixel is weighed by factor \\(w\in R^Q\\), based on its closest ab bin.
+He accounted for the class imbalance problem by re-weighting the loss of each pixel at train time based on the pixel color rarity. Each pixel is weighed by factor \\(w\in R^Q\\), based on its closest ab bin.
 
 $$
 v(Z_{h,w}) = w_{q^*},\ where q^*=\arg \max_q Z_{h,w,q}\\
 w \propto \large( (1-\lambda) \tilde{p} + \frac{\lambda}{Q}\large)^{-1},\ \mathbb{E}[w] = \sum_q \tilde{p}_qw_q=1
 $$
 
-To obtain smoothed empirical distribution \\(p \in \Delta^Q\\), we estimate the empirical training set and smooth the distribution with a Gaussian kernel \\(G\sigma \\). He then mix the distribution with a uniform distribution with weight \\(\lambda \in [0,1]\\), take the reciprocal, and normalize so the weighting factor is 1 on expectation. He found that values of \\(\lambda = \frac{1}{2}\\) and \\(\sigma = 5\\) worked well.
+To obtain smoothed empirical distribution \\(p \in \Delta^Q\\), he estimated the empirical training set and smooth the distribution with a Gaussian kernel \\(G\sigma \\). He then mix the distribution with a uniform distribution with weight \\(\lambda \in [0,1]\\), take the reciprocal, and normalize so the weighting factor is 1 on expectation. He found that values of \\(\lambda = \frac{1}{2}\\) and \\(\sigma = 5\\) worked well.
 
-He defined \\(\mathcal(H)\\), which maps the predicted distribution \\(\hat(Z)\\) to point estimate \\(\hat(Y)\\) in ab space. One choice is to take the mode of the predicted distribution for each pixel. On the other hand, takeing the mean of the predicted distribution, but desaturated result. To try to get the best of both worlds, we interpolate by re-adjusting the temperature \\(T\\) of the softmax distribution, and taking the mean of the result. 
+He defined \\(\mathcal(H)\\), which maps the predicted distribution \\(\hat(Z)\\) to point estimate \\(\hat(Y)\\) in ab space. One choice is to take the mode of the predicted distribution for each pixel. On the other hand, takeing the mean of the predicted distribution, but desaturated result. To try to get the best of both worlds, he interpolated by re-adjusting the temperature \\(T\\) of the softmax distribution, and taking the mean of the result. 
 
 $$
 \mathcal{H}(Z_{h,w}) =\mathbb{E}[f_T(Z_{h,w})], \ f_T(z)=\frac{\exp(\log(z)/T)}{\sum_q\exp(\log(z_q)/T)}
 $$
 
-We found that temperature \\(T=0.38\\) captures the virancy of the mode while maintaining the spatial coherence of the mean.
+He found that temperature \\(T=0.38\\) captures the virancy of the mode while maintaining the spatial coherence of the mean.
 
 ### Pixel CNN Loss
 
@@ -321,9 +324,9 @@ $$
 p(y|x)=\prod_i p(y(i, r) | y(1:i-1, :), x)p(y(i,b)|y(i,r), y(1:i-1, :), x)
 $$
 
-where \\(y(i,r\\) is the Cr value for pixel i, and \\(y(i,b)\\) is the Cb value.
+where \\(y(i,r)\\) is the Cr value for pixel i, and \\(y(i,b)\\) is the Cb value.
 
-We train this model using maximum likelihood, with a cross-entropy loss per pixel. Because of the sequential nature of the model, each prediction is conditioned on previous pixels. 
+He trained this model using maximum likelihood, with a cross-entropy loss per pixel. Because of the sequential nature of the model, each prediction is conditioned on previous pixels. 
 
 ## VAE loss
 
@@ -372,7 +375,7 @@ Without z, the generator could still learn a mapping from y to x, but would prod
 Vitoria [^16] proposed ChromaGAN which contains multipal loss. The generator model combines two different modules. So there will be \\(G_{\theta 1}^1, G_{\theta 2}^2\\) Its objective loss is defined by:
 
 $$
-\mathcal{L}(G_\theta, D_w)=\mathcal{L}_e(G_{\theta 1}^1)+ \lambda_g \mathcal{L}_g(G_{\theta 1}^1, D_w) + \lambda_s\mathcal{L}(G_{\theta 2}^2)
+\mathcal{L}(G_\theta, D_w)=\mathcal{L}_e(G_{\theta 1}^1)+ \lambda_g \mathcal{L}_g(G_{\theta 1}^1, D_w) + \lambda_s\mathcal{L}_s(G_{\theta 2}^2)
 $$
 
 The first term denotes the color error loss, using Euclidean Loss.
@@ -383,7 +386,7 @@ $$
 \mathcal{L}_s(G_{\theta 2}^2)=\mathbb{E}_{L~\mathbb{P}_{rg}}[KL(y_v||G_{theta 2}^2(L))]
 $$
 
-denotes the class distribution loss, where \\(\mathbb{P}_{rg\\) denotes the distribution of grayscale input images, and \\(y_v\\) the output distribution vector of a pre-trained VGG-16 model applied to the grayscale image.
+denotes the class distribution loss, where \\(\mathbb{P}_{rg}\\) denotes the distribution of grayscale input images, and \\(y_v\\) the output distribution vector of a pre-trained VGG-16 model applied to the grayscale image.
 
 Finally, \\(L_g\\) denotes the WGAN loss which consists of an adversarial Wasserstein GAN loss. Leverage the WGAN instead of other GAN losses favours nice properties such as avoiding vanishing gradients and mode collapse, and achieves more stable training.
 

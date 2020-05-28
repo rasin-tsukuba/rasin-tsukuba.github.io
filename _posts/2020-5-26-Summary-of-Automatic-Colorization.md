@@ -302,7 +302,7 @@ where \\(v(\cdot)\\) is a weighting term that can be used to rebalance the loss 
 He accounted for the class imbalance problem by re-weighting the loss of each pixel at train time based on the pixel color rarity. Each pixel is weighed by factor \\(w\in R^Q\\), based on its closest ab bin.
 
 $$
-v(Z_{h,w}) = w_{q^*},\ where q^*=\arg \max_q Z_{h,w,q}\\
+v(Z_{h,w}) = w_{q^*},\ where\ q^*=\arg \max_q Z_{h,w,q}\\
 w \propto \large( (1-\lambda) \tilde{p} + \frac{\lambda}{Q}\large)^{-1},\ \mathbb{E}[w] = \sum_q \tilde{p}_qw_q=1
 $$
 
@@ -391,12 +391,10 @@ denotes the class distribution loss, where \\(\mathbb{P}_{rg}\\) denotes the dis
 Finally, \\(L_g\\) denotes the WGAN loss which consists of an adversarial Wasserstein GAN loss. Leverage the WGAN instead of other GAN losses favours nice properties such as avoiding vanishing gradients and mode collapse, and achieves more stable training.
 
 $$
-\mathcal{L}_g(G_{\theta 1}^1, D_w) = \mathbb{E}_{\tilde{I}~\mathbb{P}_r}[D_w(\tilde{I})] \\
--\mathbb{E}_{(a,b)~\mathbb{P}_G_{\theta 1}^1}[D_w(L,a,b)]\\
--\mathbb{E}_{\tilde{I}~\mathbb{P}_\tilde{I}}[(||\triangledown_\tilde{I} D_w(\tilde{I})||_2 -1)^2]
+\mathcal{L}_g(G_{\theta 1}^1, D_w) = \mathbb{E}_{\tilde{I}~\mathbb{P}_r}[D_w(\tilde{I})] -\mathbb{E}_{(a,b)~\mathbb{P}_G_{\theta 1}^1}[D_w(L,a,b)]-\mathbb{E}_{\tilde{I}~\mathbb{P}_\tilde{I}}[(||\triangledown_\tilde{I} D_w(\tilde{I})||_2 -1)^2]
 $$
 
-where \\(\mathbb{P}_G_{\theta 1}^1}\\) is the model distribution of \\(G_{\theta 1}^1}(L)\\), with \\(L~\mathbb{P}_{rg}\\). \\(\mathbb{P}_{\tilde{I}}\\) is implicitly defined sampling uniformly along striaight line between pairs of points sampled from the data distribution \\(\mathbb{P}_r\\) and the generator distribution
+where \\(\mathbb{P}_G_{\theta 1}^1\\) is the model distribution of \\(G_{\theta 1}^1(L)\\), with \\(L~\mathbb{P}_{rg}\\). \\(\mathbb{P}_{\tilde{I}}\\) is implicitly defined sampling uniformly along striaight line between pairs of points sampled from the data distribution \\(\mathbb{P}_r\\) and the generator distribution
 
 # Evaluation Methods
 

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Summary of Automatic Colorization
-subtitle: Algorithm and
+subtitle: Color space, Network Architecture, Loss function and Evaluation
 date: 2020-05-26
 author: Rasin
 header-img: img/post-colorization-insight-9.jpg

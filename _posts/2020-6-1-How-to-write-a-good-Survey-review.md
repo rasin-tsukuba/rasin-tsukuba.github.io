@@ -133,6 +133,6 @@ The conclusion should be able to wrap up the entire survey from the formulation 
 
 ## Reference
 
-[^1]: Vijay Rajpurohit, HOW TO WRITE BETTER SURVEY PAPER?, [Research Voyage](http://www.researchvoyage.com/how-to-write-better-survey-papers/) 
+[^1]: Vijay Rajpurohit, HOW TO WRITE BETTER SURVEY PAPER?, [Research Voyage](http://www.researchvoyage.com/how-to-write-better-survey-papers/)
 
 [^2]: How to write a survey paper? [Academia Stackexchange](https://academia.stackexchange.com/questions/43371/how-to-write-a-survey-paper)

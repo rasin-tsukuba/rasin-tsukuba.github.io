@@ -14,7 +14,7 @@ tags:
 
 ## Why Writing Survey paper
 
-A Researcher begins his  research journey by first writing a survey paper in the domain of his research. 
+A Researcher begins his  research journey by first writing a survey paper in the domain of his research. [^1]
 
 Writing a survey paper helps a researcher in:
 
@@ -134,5 +134,4 @@ The conclusion should be able to wrap up the entire survey from the formulation 
 ## Reference
 
 [^1]: Vijay Rajpurohit, HOW TO WRITE BETTER SURVEY PAPER?, [Research Voyage](http://www.researchvoyage.com/how-to-write-better-survey-papers/)
-
 [^2]: How to write a survey paper? [Academia Stackexchange](https://academia.stackexchange.com/questions/43371/how-to-write-a-survey-paper)

@@ -14,13 +14,13 @@ tags:
 
 > Header Image: Image Segmentation Using Deep Learning: A Survey: [Shervin Minaee](https://arxiv.org/abs/2001.05566)
 
-## Key Sections
+## Key Sections 
 
 ### Abstract
 
 ![](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/20200602153118.png)
 
-The first sentence indicates the applications using image segmentation and shows the importance.
+The first sentence indicates the applications using image segmentation and shows the importance. [^1]
 
 Then, the second sentence shows the recent development of deep learning help image segmentation thriving.
 

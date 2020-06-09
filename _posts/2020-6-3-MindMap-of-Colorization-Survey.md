@@ -12,6 +12,6 @@ tags:
   - Colorization
 ---
 
-> Header Image: Reddit[Marilyn Monroe photo opportunity](https://www.reddit.com/r/Colorization/comments/gvbjhl/marilyn_monroe_photo_opportunity/)
+> Header Image: Reddit: [Marilyn Monroe photo opportunity](https://www.reddit.com/r/Colorization/comments/gvbjhl/marilyn_monroe_photo_opportunity/)
 
 ![](https://github.com/rasin-tsukuba/blog-images/blob/master/img/20200603194655.png?raw=true)

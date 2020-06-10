@@ -102,10 +102,10 @@ $$
 Similar to irradiance, or radiant incidence, the *radiant exitance* \\(M\\) of an extended light source, defined as the area density of the total radiant flux emitted and integrated for all wavelengths and all directions, is
 
 $$
-M = \frac{emitted radiant flux}{area} = \frac{d\phi_R}{dA}
+M = \frac{emitted \ radiant\  flux}{area} = \frac{d\phi_R}{dA}
 $$
 
-The *radiant intensity* \\(I\\) of a point light source size), defined as the total radiant flux, integrated for the whole area of the source and all wavelengths, emitted per unit solid angle in a given direction, is
+The *radiant intensity* \\(I\\) of a point light source size, defined as the total radiant flux, integrated for the whole area of the source and all wavelengths, emitted per unit solid angle in a given direction, is
 
 $$
 I = \frac{d\phi_R}{d\Omega}
@@ -122,7 +122,7 @@ Thus, the spectral radiant intensity is, in general, a function of the direction
 The *radiance* \\(L\\) of an extended light source, defined as the radiant flux per unit solid angle, per unit of projected area, in a given direction, integrated for all wavelengths, is
 
 $$
-L = \frac{radiant flux per steradian}{projected area} = \frac{d^2\phi_R}{dA_Pd\Omega} = \frac{1}{cos \theta} \frac{d^2\phi R}{dAd\Omega}
+L = \frac{radiant\ flux\ per\ steradian}{projected area} = \frac{d^2\phi_R}{dA_Pd\Omega} = \frac{1}{cos \theta} \frac{d^2\phi R}{dAd\Omega}
 $$
 
 where the projected area \\(A_P\\) is equal to the area \\(A\\) of the source multiplied by the cosine of the angle \\(\theta\\) between the line of sight and the normal to the source. The radiance is a function of the observing direction \\(\theta\\), but for perfectly illuminated diffusing surfaces, called Lambert surfaces, this is a constant.
@@ -136,3 +136,77 @@ $$
 Table 1.2 summarizes these units.
 
 ![](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/20200609112417.png)
+
+[Chinese Version of Radiance Unit](https://zh.wikipedia.org/wiki/%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6)
+
+### Photometric Units
+
+When light enters the eye, a luminous stimulus is produced.
+
+The *luminous flux* \\(\phi_v\\) can be considered the basic photometric unit, equivalent to the radiant flux, but evaluated according to the magnitude of the luminous stimulus it produces,measured in lumens (lm).
+
+This luminous stimulus is strongly dependent on wavelength, as will be noted later in this section.
+
+The *illuminance* \\(E_v\\) is the area density of luminous flux received by a illuminated body, integrated for all wavelengths and all directions. Its unit is the *lux*, in lumens per square meter, and is defined by 
+
+$$
+E_v = \frac{luminous \ flux}{area} =\frac{d\phi_v}{dA}
+$$
+
+The *spectral illuminance* \\(E_v(\lambda)\\) is defined as the illuminance per unit wavelength interval, at the wavelength \\(\lambda\\), and is related to the illuminance \\(E_v\\) by the relation
+
+$$
+E_v=\int_0^\infty E_v(\lambda)d\lambda
+$$
+
+The *luminous exitance* \\(M_v\\) of an extended light source, defined as the area density of the total luminous flux emitted, integrated for all wavelengths and all directions, is
+
+$$
+M_v = \frac{emitted\ luminous\ flux}{area} = \frac{d\phi_v}{dA}
+$$
+
+which is measured in lumens per square meter (not luxes, which are used only for illuminance). This quantity is rarely used in colorimetry.
+
+The *luminous intensity* \\(I_v\\) of a point light source, defined as the total luminous flux, integrated for the whole area of the source and all wavelengths, emitted per unit solid angle in a given direction, is
+
+$$
+I_v=\frac{d\phi_v}{d_\Omega}
+$$
+
+From the beginning of the nineteenth century, the unit of luminous intensity was the candle. In 1979 it was redefined and confirmed with the Latin name *candela* (cd). A candela is defined as the luminous intensity in a given direction of a source that emits monochromatic light of frequency \\(540 \times 1012\\) Hz (wavelength equal to 555 nm) and has a radiant intensity in that direction of \\(\frac{1}{683}\ W/sr\\). This average is now known as the standard observer.
+
+With this definition the lumen becomes a secondary unit defined in terms of the *candela*. So, one lumen is equal to one candela emitted per unit solid angle (steradian, abbreviated as sr).
+
+The *spectral luminous intensity* \\(I_v(\lambda)\\) of a point light source is defined as the luminous intensity per unit wavelength interval, at the wavelength \\(\lambda\\), and is related to the luminous intensity \\(I_v\\) by
+
+$$
+I_v=\int_0^\infty I_v(\lambda)d\lambda
+$$
+
+The *luminance* \\(L_v\\) of a luminous object is defined as the total integrated luminous flux for all wavelengths, emitted per unit solid angle, per unit of projected area in a given direction, of the luminous surface, as follows:
+
+$$
+L_v = \frac{luminous\ flux\ per\ steradian}{projected\ area} = \frac{d^2\phi_v}{dA_pd\Omega} = \frac{1}{cos \theta}\frac{d^2\phi_v}{dAd\Omega}
+$$
+
+where the projected area \\(A_p\\) is equal to the actual area \\(A\\) of the source, multiplied by the cosine of the angle\\(\theta\\) between the line of sight and the normal to the source. As with the radiance, the luminance is also a function of the direction of observation.
+
+The *spectral luminance* \\(L_v(\lambda)\\), defined as the luminance per unit wavelength interval, at the wavelength \\(\lambda\\), is related to the luminance \\(L_v\\) by
+
+$$
+L_v=\int_0^\infty L_v(\lambda)d\lambda
+$$
+
+Given a certain spectral distribution, the **luminance** is directly proportional to the radiance, and there is a linear relation between them. however, the eye response is not linear to either of these two quantities.
+
+Another quantity, called **lightness**, which is nonlinear to the luminance but linear to the eye response.
+
+The **brightness** is not a physical unit but a more subjective term related to the perception elicited by the luminance of a luminous object.
+
+An example is illustrated in Fig. 1.10, where a strip with constant luminance is surrounded by a field with a gradient in luminance. The inner strip has a gradient brightness but a constant luminance.
+
+![](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/20200610212012.png)
+
+Table 1.3 summarizes these units.
+
+![](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/20200610212553.png)

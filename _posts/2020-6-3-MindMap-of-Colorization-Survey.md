@@ -10,6 +10,7 @@ tags:
   - Technical Writing
   - Deep Learning
   - Colorization
+  
 ---
 
 > Header Image: Reddit: [Marilyn Monroe photo opportunity](https://www.reddit.com/r/Colorization/comments/gvbjhl/marilyn_monroe_photo_opportunity/)

@@ -10,6 +10,7 @@ tags:
   - Technical Writing
   - Deep Learning
   - Semantic Segmentation
+  - Papers
 ---
 
 > Header Image: Image Segmentation Using Deep Learning: A Survey: [Shervin Minaee](https://arxiv.org/abs/2001.05566)

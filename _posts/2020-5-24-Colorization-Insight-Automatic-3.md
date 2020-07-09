@@ -10,6 +10,7 @@ tags:
     - Computer Vision
     - Colorization
     - Deep Learning
+    - Papers
 ---
 
 > Header Image: Reddit: [Aisin Gioro Puyi, the last emperor of China, as puppet emperor of Manchukuo, wearing the Manzhouguo uniform, circa 1940.](https://www.reddit.com/r/Colorization/comments/gkwr82/aisin_gioro_puyi_the_last_emperor_of_china_as/) 

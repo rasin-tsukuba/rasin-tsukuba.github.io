@@ -10,6 +10,7 @@ tags:
     - Computer Vision
     - Colorization
     - Deep Learning
+    - Papers
 ---
 
 > Header Image: Reddit: [Actress Natalie Wood (1938-1981)](https://www.reddit.com/r/Colorization/comments/ggueww/actress_natalie_wood_19381981/) 

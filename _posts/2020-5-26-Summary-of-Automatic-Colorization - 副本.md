@@ -10,6 +10,7 @@ tags:
   - Computer Vision
   - Colorization
   - Deep Learning
+  - Papers
 ---
 
 > Header Image: Reddit: [Schoolgirls text messaging in the 40s

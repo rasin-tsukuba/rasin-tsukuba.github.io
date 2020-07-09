@@ -9,7 +9,7 @@ catalog: true
 tags:
   - Computer Graphics
   - Mathematics
-  - Notes
+  - Tutorials
 ---
 # Review of Linear Algebra
 

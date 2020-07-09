@@ -10,6 +10,7 @@ tags:
   - Color Theory
   - Physics
   - Human Vision System
+  - Book
 ---
 **This is a series of study notes of the book *Color Vision and Colorimetry Theory and Applications* by *Daniel Malacara*.**
 

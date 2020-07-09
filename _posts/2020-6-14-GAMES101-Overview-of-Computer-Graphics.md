@@ -8,7 +8,7 @@ header-img: img/GAMES-101-1.jpg
 catalog: true
 tags:
   - Computer Graphics
-  - Notes
+  - Tutorials
 ---
 # Overview of Computer Graphics
 

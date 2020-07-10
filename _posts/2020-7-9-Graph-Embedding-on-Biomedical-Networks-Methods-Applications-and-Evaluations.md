@@ -57,3 +57,60 @@ Various neural networks also have been introduced into graph embedding areas, su
 ## Applications of Graph Embedding on Biomedical Networks
 
 We select 11 representative graph embedding methods and review how they are used on 3 popular biomedical link prediction applications, and 2 biomedical node classification applications.
+
+### Link Prediction
+
+Discovering new interactions (links) is one of the most important tasks in the biomedical area.Developing computational methods such as DDA network, DDI network, and PPI network can help generate hypotheses of potential associations or interactions in biological network.
+
+The link prediction task can be formulated as: *given a set of biomedical entities and their known interactions, we aim to predict other potential interactions between entities*.  
+
+Traditional methods in the biomedical field put much effort on feature engineering to develop biological features, gene ontology, or graph properties. 
+
+However, deploying methods based on biological features typically faces two problems: 
+- biological features may not always be available and can be hard and costly to obtain
+  - One popular approach to solve this problem is to remove those biological entities without features via pre-processing, which usually results in small-scale pruned datasets 
+- Biological featuers, as well as hand-crafted graph featurs, may not be precise enough to represent or characterize biomedical entities, and may fail to help build a robust and accurate model for many applications.
+
+Graph embedding methods that seek to learn node representations automatically are promising to solve the two problems mentioned above.
+
+- MF-based techniques are used for predictions of DDAs.
+- Manifold regularized MF in which Laplacian regularization is incorporated to learn a better drug representations in predicting DDIs.
+- PPIs are commonly predicted using Laplacian and SVD techniques.
+- Autoencoder-based model to learn embedding of proteins, similar to SDNE
+
+### Node Classification
+
+Node classification which aims to predict the class of unlabeled nodes given a partially labeled graph, is also one of the most important applications in graph analysis. 
+
+#### Protein Function Prediction
+
+- A regularized Laplacian kernel-based method is proposed to learn low-dimensional embeddings of proteins.
+- Mashup, which first performs random walks with restart on PPI networks and then learns embeddings for each protein via a low rank matrix approximation method.
+- DeepGO that learns joint representations of proteins based on protein sequence as well as PPI network.
+- OhmNet, which optimizes hierarchical dependency objectives based on node2vec to learn feature representations in multilayer tissue networks for function prediction.
+- deepNF, which learns embeddings of proteins via a deep autoencoder.
+
+#### Medical Term Semantic Type Classification
+
+The increase of clinical texts have been encouraging data-driven models for improving the patient personal care and help clinical decision. To facilitate research on clinical texts, a popular substitute strategy for releasing raw clinical texts, a popular substitue strategy for releasing raw clinical texts is to extract medical terms and their aggregated co-occurrence counts from the clinical texts. However, such datasets do not reveal the semantic information.
+
+A less-investigated but meaning ful node classification task: given a medical term co-occurrence graph where terms and co-occurrence statistics have been extracted from clinical texts, classify the semantic types of medical terms.
+
+![](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/20200710151353.png)
+
+We apply graph embedding methods to the co-occurence graph to learn representations of medical terms. Afterward, a multi-label classifier can be trained based on the learned embeddings to classify the semantic types of medical terms. 
+
+## Experiments
+
+![](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/20200710154456.png)
+
+### Datasets
+
+For Link Prediction:
+1. DDA Graph: Comparative Toxicogenomics Database (CTD). We obtain 92813 edges between 12765 nodes in this graph. Another is National Drug File Reference Terminology (NDF-RT) in UMLS. We extract drug-disease treatment associations using the *may treat* and *may be treated by* relationships in NDF-RT. This graph (named ‘NDFRT DDA’) contains 13545 nodes (12 337 drugs and 1208 diseases) and 56515 edges.
+2. DDI Graph: We collect verified DDIs from DrugBank. We obtain 242 027 DDIs between 2191 drugs and refer to this dataset as ‘DrugBank DDI’.
+3. PPI Graph: We extract *Homo sapiens* PPIs from STRING database. Finally, we obtain 359 776 interactions among 15 131 proteins and name this dataset as ‘STRING PPI’.
+
+For Node Classification:
+1. Medical Term-Term Co-occurrence Graph
+2. PPI Graphs with Functional Annotations

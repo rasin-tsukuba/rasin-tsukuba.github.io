@@ -102,11 +102,11 @@ $$
 \textbf{x}_{a, 1}
 $$
 
-where \\(\textbf{x}_{average(b,c,d), 1}\\) is the average of node \\(b, c, d\\)'s level 1 embedding, 
-\\(\textbf{x}_{a, 1}\\) is node *a*'s level 1 embedding, and \\(\textbf{w}_2\\) and \\(\textbf{s}_2\\) are the trainable parameters. 
+where \\(x_{average(b,c,d), 1}\\) is the average of node \\(b, c, d\\)'s level 1 embedding, 
+\\(x_{a, 1}\\) is node *a*'s level 1 embedding, and \\(\textbf{w}_2\\) and \\(\textbf{s}_2\\) are the trainable parameters. 
 
-To obtain the level 2 embedding, we apply an activation function to the average result: \\(\textbf{x}_{a, 2}=
-\sigma (\textbf{h}_{a, 2}\\).
+To obtain the level 2 embedding, we apply an activation function to the average result: \\({x}_{a, 2}=
+\sigma ({h}_{a, 2}\\).
 
 Notice that between different nodes, the weights within the same neural layer are shared, which means the graph neural network can be generalized to previously unseen network of the same type.
 

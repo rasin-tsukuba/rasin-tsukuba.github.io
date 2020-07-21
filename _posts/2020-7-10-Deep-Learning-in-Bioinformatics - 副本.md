@@ -105,10 +105,58 @@ $$
 where \\(x_{average(b,c,d), 1}\\) is the average of node \\(b, c, d\\)'s level 1 embedding, 
 \\(x_{a, 1}\\) is node *a*'s level 1 embedding, and \\(\textbf{w}_2\\) and \\(\textbf{s}_2\\) are the trainable parameters. 
 
-To obtain the level 2 embedding, we apply an activation function to the average result: \\({x}_{a, 2}=
-\sigma ({h}_{a, 2}\\).
+To obtain the level 2 embedding, we apply an activation function to the average result: \\(x_{a, 2}=\sigma (h_{a, 2}\\).
 
 Notice that between different nodes, the weights within the same neural layer are shared, which means the graph neural network can be generalized to previously unseen network of the same type.
 
 ### Generative Models: GAN and VAE
 
+GAN and VAE can be useful for biological and biomedical image processing and protein or drug design. The generative models belong to unsupervised learning, which cares more about the intrinsic properties of the data. With generative models, we want to learn the data distribution and generate new data points with some variations.
+
+![](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/20200711161643.png)
+
+As shown in Fig. 6, instead of training only one neural network, GAN trains a pair of networks which compete with each other. The generator network is the final productive neural network which can produce new data samples while the discriminator network distinguishes the designed enzyme sequences from the real ones to push the generator network to produce protein sequences that are more likely to be enzyme sequences instead of some random sequences. For the generator network, the last layer needs to be redesigned to match the dimensionality of an enzyme sequence encoding.
+
+![](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/20200711162010.png)
+
+The variational autoencoder is shown in Fig. 7. The autoencoder is usually used to encode high dimensional input data, such as an image, into a much lower dimensional representation, which can store the latent information of the data distribution. It contains two parts, the encoder network and the decoder network. The encoder network can transform the input data into a latent vector and the decoder network can reconstruct the data from the latent vector with the hope that the reconstructed image is as close to the original input as possible. Autoencoder is very convenient for dimensionality reduction. However, we cannot use it to generate new data which are not in the original input. Variational antoencoder overcomes the bottleneck by making a slight change to the latent space. Instead of mapping the input data to one exact latent vector, we map the data into a low dimensional data distribution.
+
+## Applications of Deep Learning in Bioinformatics
+
+![](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/20200711163249.png)
+
+The examples are carefully selected, typical examples of applying deep learning methods into important bioinformatic problems, which can reflect all of the above discussed research directions, models, data types, and tasks, as summarized in Table 4.
+
+### Identifying Enzymes Using Multi-Layer Neural Network
+
+Accurately identifying enzymes and predicting their function can benefit various fields, such as biomedical diagnosis and industrial bio-production. In this example, we show how to identify enzyme sequences based on sequence information using deep learning based methods.
+
+So before building the deep learning model, we need to first encode the protein sequences into numbers. In this example, we use a sparse way to encode the protein sequences, the functional domain encoding. For each protein sequence, we use HMMER to search it against the protein functional domain database, Pfam. If a certain functional domain is hit, we encode that domain as 1, otherwise 0. Since Pfam has 16306 functional domains, we have a 16306D vector, composed of 0s and 1s, to encode each protein sequence.
+
+As for the dataset, we use the *NEW* dataset from the author's previous work, which contains 22168 enzyme sequences and 22168 non-enzyme protein sequences, whose sequence similarity is under 40% within each class.
+
+The paper claimed that:
+
+> In our implementation, ... We use ReLU as the activation function, cross-entropy loss as the loss function, and Adam as the optimizer. We utilize dropout, batch normalization and weight decay to prevent overfitting. With the help of Keras, we build and train the model in 10 lines. Training the model on a Titan X for 2 minutes, we can reach around 94.5% accuracy, which is very close to the state-of-the-art performance. Since bimolecular function prediction and annotation is one of the main research directions of bioinformatics, researchers can easily adopt this example and develop the applications for their own problems.
+
+The network architecture of their implemetation is like:
+
+![](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/20200712100558.png)
+
+In fact, we didn't see the implementation of **batch normalization**, **weight decay** in their code. The accuracy is soon reach to *94.5%* and can hardly get higher. Using *1024* neuron in this trivial task is unnecessary and it converges very fast.
+
+In our PyTorch implementation, we using the same network structure as shown below:
+
+![](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/20200712100927.png)
+
+The training process is here:
+
+![](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/20200712101110.png)
+
+The Pytorch implementation is here: [Identifying Enzymes Using Multi-Layer Neural Network](https://github.com/rasin-tsukuba/Deep_Bioinfo_Examples/tree/master/1.Identifying%20Enzymes%20Using%20Multi-Layer%20Neural%20Network)
+
+### Gene expression regression
+
+Gene expression data are one of the most common and useful data types in bioinformatics, which can be used to reflect the cellular changes corresponding to different physical and chemical conditions and genetic perturbations. Previously, the most commonly used method is linear regression. 
+
+In this example, we use deep learning method to perform gene expression prediction, showing how to perform regression using deep learning. We use the Gene Expression Omnibus (GEO) dataset, which has already gone through the standard normalization procedure. For the regression problem, we use the mean squared error as the loss function. Besides, we also change the activation function of the last layer from Softmax to TanH for this application.

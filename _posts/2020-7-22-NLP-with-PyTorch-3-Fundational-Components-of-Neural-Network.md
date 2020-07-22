@@ -1,6 +1,6 @@
 ---
 layout: post
-title: NLP with PyTorch 2 Quick Tour of Traditional NLP
+title: NLP with PyTorch 3 Fundational Components of Neural Network.
 subtitle: 
 date: 2020-07-22
 author: Rasin

@@ -61,13 +61,13 @@ A simplicial complex is a combination of simplexes (单纯形) under certain rul
 
 A simplex is the building block for simplicial complex. It can be viewed as a generalization of a triangle or tetrahedron to their higher dimensional counterparts.
 
-**Definition 1**: A geometric k-simplex \\(\sigma^k={v_0, v_1, v_2, \dots, v_k}\\) is the convex hull formed by \\(k+1\\) affinely independent points \\(v_0, v_1, v_2, \dots, v_k\\) in Euclidean space \\(R^d\\) as follows,
+**Definition 1**: A geometric k-simplex \\(\sigma^k=\{v_0, v_1, v_2, \dots, v_k\}\\) is the convex hull formed by \\(k+1\\) affinely independent points \\(v_0, v_1, v_2, \dots, v_k\\) in Euclidean space \\(R^d\\) as follows,
 
 $$
-\sigma^k = \large{\lambda_0v_0 + \lambda_1v_1+\dots+\lambda_kv_k | \sum_{i=0}^k \lambda_i=1;0\leq \lambda_i \leq 1, i=0,1,\dots, k \large}
+\sigma^k = \left{\lambda_0v_0 + \lambda_1v_1+\dots+\lambda_kv_k | \sum_{i=0}^k \lambda_i=1;0\leq \lambda_i \leq 1, i=0,1,\dots, k \right}
 $$
 
-A face \\(\tau\\) of k-simplex \\(\simga^k\\) is the convex hull of a non-empty subset. We denote it as \\(\tau \leq \sigma^k\\).
+A face \\(\tau\\) of k-simplex \\(\sigma^k\\) is the convex hull of a non-empty subset. We denote it as \\(\tau \leq \sigma^k\\).
 
 Geometrically, a 0-simplex is a vertex,a 1-simplex is an edge, 2-simplex is a triangle, and a 3-simplex represents a tetrahedron.
 
@@ -80,8 +80,26 @@ The dimension of K is the maximal dimension of its simplexes. A geometric simpli
 
 Graphs and networks, which are comprised of only vertices and edges, can be viewed as a simplicial complex with only 0-simplex and 1-simplex.
 
-**Definition 3**: An abstrat simplicial complex K is a finite set of elements \\(\sigma^k={v_0, v_1, v_2, \dots, v_k}\\) called abstract vertices, together with a collection of subsets \\(v_{i0}, v_{i1}, v_{i2}, \dots, v_{ik})\\) called abstract simplexes, with the property that any subset of a simplex is still a simplex.
+**Definition 3**: An abstrat simplicial complex K is a finite set of elements \\(\sigma^k=\{v_0, v_1, v_2, \dots, v_k\}\\) called abstract vertices, together with a collection of subsets \\((v_{i0}, v_{i1}, v_{i2}, \dots, v_{ik})\\) called abstract simplexes, with the property that any subset of a simplex is still a simplex.
 
 For an abstract simplicial complex K, there exists a geometric simplicial complex K' whose vertices are in one-to-one correspondence with the vertices of K and a subset of vertices being a simplex of K' is called the geometric realization of K.
 
-#### 
+#### Cech Complex and Vietoris-Rips Complex
+
+Let X be a point set in Eucledian space \\(R^d\\) and \\(\mathcal{U}\\) is a good cover of X, i.e., \\(X \subseteq \cup_{i\in I} \mathcal{U}_i\\).
+
+**Definition 4**: The *nerve* \\(\mathcal{N}\\) of \\(\mathcal{U}\\) is defined by the following two conditions:
+
+1. \\(\emptyset \in \mathcal{N}\\)
+2. If \\(\cap_{j\in J} U_j \neq \emptyset\\) for \\(J \subseteq I\\), then \\(J \in \mathcal{N}\\)
+
+**Theorem 1**: (Nerve theorem) The geometric realization of the nerve of \\(\mathcal{U}\\) is homotopy equivalent to the union of sets in \\(\mathcal{U}\\).
+
+We can define \\(B(X, \epsilon)\\) o be the closed balls of radius \\(\epsilon\\) centered at \\(x \in X\\), then the union of these balls is a cover of space X and Cech complex is the nerve of this cover.
+
+**Definition 5**: The Cech complex with parameter \\(\epsilon\\) of X is the nerve of the collection of balls \\(B(X, \epsilon)\\). The Cech complex \\(C_\epsilon(X)\\) can be represented as \\(C_\epsilon(X):=\{\sigma \in X | \cap_{x\in\sigma} B(X,\epsilon) \neq \emptyset\}\\).
+
+**Definition 6**: The Vietoris-Rips complex (Rips complex) with parameter \\(\epsilon\\) denoted by \\(R_\epsilon (X)\\), is the set of all \\(\sigma \subseteq X\\), such that the largest Euclidean distance between any of its points is at most \\(2\epsilon\\).
+
+It should be noticed that both Cech complex and Vietoris-Rips complex are abstract simplicial complexes, that are defined on point cloud data in a metric space. However, only Cech complex preserves the homotopy information of the topological spaces formed by the \\(\epsilon\\) -balls.
+

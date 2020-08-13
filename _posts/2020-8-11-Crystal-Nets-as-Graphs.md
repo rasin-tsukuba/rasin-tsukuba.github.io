@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Crystal Nets as Graphs
-date: 2020-08-07
+date: 2020-08-11
 subtitle: Introduction to graph theory and its application to crystal nets
 author: Rasin
 header-img: img/crystal-1.png

@@ -70,6 +70,8 @@ Origin: [图神经网络入门](https://zhuanlan.zhihu.com/p/105605774)
 
 图嵌入发展较早，在早期是一个相对独立的领域。图嵌入比较经典的是DeepWalk，基本思想类似词向量训练。
 
+详细见：[Graph Embedding](https://rasin-tsukuba.github.io/2020/08/13/Graph-Embedding/)
+
 #### 图神经网络
 
 #### 图卷积网络

@@ -152,7 +152,7 @@ $$
 D(x_i, x_j) = \sqrt{(x_i - x_j)^\top M (x_i-x_j)}
 $$
 
-where M is a learned parameter that satisfies \\(M=W_dW_d^T) is the transform basis to the adaptive space. Then AGCN calculates the Gaussian kernel and normalize G to obtain the dense adjacency matrix \\(\hat{A}\\):
+where M is a learned parameter that satisfies \\(M=W_dW_d^T\\) is the transform basis to the adaptive space. Then AGCN calculates the Gaussian kernel and normalize G to obtain the dense adjacency matrix \\(\hat{A}\\):
 
 $$
 G_{x_i, x_j} = \exp (-D(x_i, x_j)/(2\sigma^2))
@@ -321,7 +321,7 @@ GAT incorporates the attention mechanism into the propagation steps. It follows 
 *Graph attention layer* is used to construct *arbitrary graph attention networks* by stacking this layer. The layer computes the coefficients in the attention mechanism of the node pair \\((i, j)\\) by:
 
 $$
-\alpha_{ij} = \frac{\exp (LeakyReLU(a^\top[Wh_i||Wh_j]))}{\sum_{k\inN_i}\exp(LeakyReLU(a^\top[Wh_i||Wh_k]))}
+\alpha_{ij} = \frac{\exp (LeakyReLU(a^\top[Wh_i||Wh_j]))}{\sum_{k\in N_i}\exp(LeakyReLU(a^\top[Wh_i||Wh_k]))}
 $$
 
 where \\(\alpha_{ij}\\) is the attention coefficient of node j to i, \\(N_i\\) represents the neighborhoods of node i in the graph. The input node features are denoted as \\(h=\{h_1, h_2, \dots, h_N\}, h_i\in R^F\\), where N is the number of nodes and F is the dimension, the output node features are denoted as \\(h' = \{h_1', h_2', \dots, h_N'\}, h_i' \in R^{F'}\\). \\(W \in R^{F'\times F}\\) is the weight matrix of a shared linear transformation which applied to every node, \\(a \in R^{2F'}\\) is the weight vector. It is normalized by a softmax function and the LeakyReLU nonlinearity is applied.

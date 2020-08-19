@@ -129,7 +129,11 @@ v_{1} & v_{2} & \dotsc  & v_{n}
 \end{bmatrix}
 $$
 
-Let \\(V = \begin{bmatrix}v_{1} & v_{2} & \dotsc  & v_{n}\end bmatrix}\\); then it is clear that \\(V\\) is an invertible matrix. We have the **eigen decomposition** of \\(A\\) (also called diagonalization)
+Let 
+$$
+V = \begin{bmatrix}v_{1} & v_{2} & \dotsc  & v_{n}\end bmatrix}
+$$
+then it is clear that \\(V\\) is an invertible matrix. We have the **eigen decomposition** of \\(A\\) (also called diagonalization)
 
 $$
 A = V diag{\lambda} V^{-1}
@@ -152,7 +156,7 @@ As eigendecomposition can only be applied to certain matrices, we introduce the 
 **Singular Value**: Let \\(r\\) denote the rank of \\(A^\top A\\), then there exist \\(r\\) positive scalars \\(\sigma_1 \geq \sigma_2 \geq \dots \geq \sigma_r \geq 0\\) such that for \\(1 \leq i \leq r\\), \\(v_i\\) is an eigenvector of \\(A^\top A\\) with corresponding eigenvalue \\(\sigma_i^2\\). The r positive scalars \\(\sigma_1, \sigma_2, \dots, \sigma_r\\) are called singular values of A. Then we have the singular value decomposition:
 
 $$
-A = U\SigmaV^\top
+A = U\Sigma V^\top
 $$
 
 where \\(U\\) and \\(V\\) are orthogonal matrices and \\(\Sigma\\) is an \\(m \times n\\) matrix defined as follows:
@@ -163,7 +167,7 @@ $$
 0 & otherwise
 \end{cases}
 $$
- f \\(AA^\top\\), and the eigenvectors of \\(A^\topA) are made up of the column vectors of \\(V\\).
+ f \\(AA^\top\\), and the eigenvectors of \\(A^\top A\\) are made up of the column vectors of \\(V\\).
 
 ### Probability Theory
 
@@ -199,7 +203,7 @@ $$
 Using product rule, we can deduce the **chain rule**:
 
 $$
-P(X_1 = x_1, \dots, X_n=x_n)=P(X_1=x_1)\prod_{i=2}^{n}P(X_i=x_i|X_1=x_1, \dos, X_{i-1}=x_{i-1})
+P(X_1 = x_1, \dots, X_n=x_n)=P(X_1=x_1)\prod_{i=2}^{n}P(X_i=x_i|X_1=x_1, \dots, X_{i-1}=x_{i-1})
 $$
 
 where \\(X_1, \dots, X_n\\) are n random variables. 
@@ -231,10 +235,10 @@ $$
 **Gaussian Distribution**: it is also known as **normal distribution**:
 
 $$
-N(x|\miu, \sigma^2) = \frac{1}{2\pi \sigma^2} \exp (-\frac{1}{2\sigma^2}(x-\miu)^2)
+N(x|\mu, \sigma^2) = \frac{1}{2\pi \sigma^2} \exp (-\frac{1}{2\sigma^2}(x-\mu)^2)
 $$
 
-where \\(\miu\\) is the mean of variable \\(x\\) and \\(\sigma^2\\) is the variance.
+where \\(\mu\\) is the mean of variable \\(x\\) and \\(\sigma^2\\) is the variance.
 
 **Bernoulli distribution**: random variable \\(X\\) can either be 0 or 1, with a probability \\(P(X=1)=p\\). Then the distribution function is:
 
@@ -258,7 +262,7 @@ is the Binomial distribution satisfying that \\(\mathbb{E}(Y)=np\\) and \\(Var(Y
 **Laplace distribution**: is described as
 
 $$
-P(x|\miu, b) = \frac{1}{2b} \exp (-\frac{|x-\miu|}{b})
+P(x|\mu, b) = \frac{1}{2b} \exp (-\frac{|x-\mu|}{b})
 $$
 
 ### Graph Theory
@@ -360,7 +364,11 @@ Several **activation functions** are shown as follows:
 
 - Sigmoid: \\(\sigma(x) = \frac{1}{1 + e^{-x}}\\)
 - Tanh: \\(tanh(x) = \frac{e^x-e^{-x}}{e^x+e^{-x}}\\)
-- ReLU: \\(ReLU = \begin{cases}x & x >0\\0 & x\leq 0 \end{cases}\\)
+- ReLU: 
+
+$$
+ReLU = \begin{cases}x & x >0\\0 & x\leq 0 \end{cases}
+$$
 
 During the training of a neural network, the choice of activation function is usually essential to the outcome.
 

@@ -17,7 +17,7 @@ tags:
 
 ### Motivations
 
-#### Convolutional Neural Networks
+#### Graph Neural Networks
 
 Firstly, GNNs are motivated by convolutional neural networks. We find the keys of CNNs: 
 

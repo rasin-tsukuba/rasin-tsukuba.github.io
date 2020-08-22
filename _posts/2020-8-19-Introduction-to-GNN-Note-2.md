@@ -36,7 +36,7 @@ where \\(x\\) denotes the input feature and \\(h\\) denotes the hidden state. \\
 
 ![](https://raw.githubusercontent.com/rasin-tsukuba/blog-images/master/img/20200817170211.png)
 
-In the example of node \\(l_1\\), \\(x_{l_1}\\) is the input feature of \\(l_1\\). \\(co[l_1]\\) contains edges \\(l_{(1, 4)}, l_{(1, 6)}, l_{(1, 2)}, l_{(3, 1)}). \\(ne[l_1]\\) contains nodes \\(l_2, l_3, l_4, l_6\\).
+In the example of node \\(l_1\\), \\(x_{l_1}\\) is the input feature of \\(l_1\\). \\(co[l_1]\\) contains edges \\(l_{(1, 4)}, l_{(1, 6)}, l_{(1, 2)}, l_{(3, 1)}\\). \\(ne[l_1]\\) contains nodes \\(l_2, l_3, l_4, l_6\\).
 
 Let H, O, X, and \\(X_N\\) be the matrices constructed by **stacking all the states**, **all the outputs**, **all the features**, and **all the node features**, respectively. Then we have a compact form as:
 
@@ -81,7 +81,7 @@ GCNs aim to generalize convolutions to the graph domain. As CNNs have achieved g
 
 ### Spectral Methods
 
-Spectral approaches work with a spectral representation of the graphs.3
+Spectral approaches work with a spectral representation of the graphs.
 
 #### Spectral Network
 
@@ -121,7 +121,7 @@ $$
 g_\theta * x \approx \theta(I_N + D^{-\frac{1}{2}}AD^{-\frac{1}{2}})x
 $$
 
-Note that stacking this operator could lead to numerical instabilities and exploding/vanishing gradients. Kipf introduced the *renormalization trick*: \\(I_N + D^{-\frac{1}{2}}AD^{-\frac{1}{2}} \rightarrow \tilde{D}^{-\frac{1}{2}}\tilde{A}\tilde{D}^{-\frac{1}{2}} \\) with \\(\tilde{A} = A+I_N\\) and \\(\tilde{D}_{ii}=\sum_j \tilde{A}_{ij}\\). Finally, they generalize the definition to a signal \\(X \in R^{N \times C}\\)  with C input channels and F filters for feature maps as follows:
+Note that stacking this operator could lead to numerical instabilities and exploding/vanishing gradients. Kipf introduced the *renormalization trick*: \\(I_N + D^{-\frac{1}{2}}AD^{-\frac{1}{2}} \rightarrow \tilde{D}^{-\frac{1}{2}}\tilde{A}\tilde{D}^{-\frac{1}{2}} \\) with \\(\tilde{A} = A+I_N\\) and \\(\tilde{D}_{ii} = \sum_j \tilde{A}_{ij}\\). Finally, they generalize the definition to a signal \\(X \in R^{N \times C}\\)  with C input channels and F filters for feature maps as follows:
 
 $$
 Z = \tilde{D}^{-\frac{1}{2}}\tilde{A}\tilde{D}^{-\frac{1}{2}}X\Theta
@@ -171,13 +171,13 @@ The major challenge of spatial approaches is **defining the convolution operatio
 Duvenaud use different weight matrices for nodes with different degrees:
 
 $$
-x = h_v^{t-1} + \sum_{i=1}^{|N_v|}h_i^{t-1}\\
-h_v^t=\sigma (xW_t^{|N_v|})
+x = h_v^{t-1} + \sum_{i=1}^{\mid N_v\mid}h_i^{t-1}\\
+h_v^t=\sigma (xW_t^{\mid N_v \mid})
 $$
 
-where \\(W_t^{|N_v|}\\) is the weight matrix for nodes with degree \\(|N_v|\\) at layer t, \\(N_v\\) denotes the set of neighbors of node v, \\(h_v^t\\) is the embedding of node v at layer t.
+where \\(W_t^{ \mid N_v\mid}\\) is the weight matrix for nodes with degree \\( \mid N_v \mid \\) at layer t, \\(N_v\\) denotes the set of neighbors of node v, \\(h_v^t\\) is the embedding of node v at layer t.
 
-The model first adds the embeddings from itself as well as its neighbors, then it uses \\(W_t^{|N_v|}\\) to do the transformation.  The model defines different matrices \\(W_t^|N_v|\\) for nodes with different degrees.
+The model first adds the embeddings from itself as well as its neighbors, then it uses \\(W_t^{ \mid N_v \mid}\\) to do the transformation.  The model defines different matrices \\(W_t^\mid  N_v \mid\\) for nodes with different degrees.
 
 The main drawback of the method is that it cannot be applied to large-scale graphs with more node degrees.
 

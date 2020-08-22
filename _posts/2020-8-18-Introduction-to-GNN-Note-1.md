@@ -17,7 +17,7 @@ tags:
 
 ### Motivations
 
-#### Graph Neural Networks
+#### Convolutional Neural Networks
 
 Firstly, GNNs are motivated by convolutional neural networks. We find the keys of CNNs: 
 
@@ -130,9 +130,11 @@ v_{1} & v_{2} & \dotsc  & v_{n}
 $$
 
 Let 
+
 $$
-V = \begin{bmatrix}v_{1} & v_{2} & \dotsc  & v_{n}\end bmatrix}
+V = \begin{bmatrix}v_{1} & v_{2} & \dots  & v_{n}\end bmatrix}
 $$
+
 then it is clear that \\(V\\) is an invertible matrix. We have the **eigen decomposition** of \\(A\\) (also called diagonalization)
 
 $$
@@ -181,7 +183,7 @@ $$
 
 Suppose there is another random variable \\(Y\\) that has \\(y_1\\) as a possible value. The probability that \\(X=x_1\\) and \\(Y=y_1\\) is written as \\(P(X=x_1, Y=y_1)\\), which is called the **joint probability** of \\(X=x_1\\) and \\(Y=y_1\\).
 
-The probability of \\(X=x_1\\) on the condition that \\(Y=y_1\\), which can be written as \\(P(X=x_1|Y=y_1)\\). We call this the **conditional probability** of \\(X=x_1\\) given \\(Y=y_1\\). With the concepts above, we can write the following two fundamental rules of probability theory:
+The probability of \\(X=x_1\\) on the condition that \\(Y=y_1\\), which can be written as \\(P(X=x_1 \mid Y=y_1)\\). We call this the **conditional probability** of \\(X=x_1\\) given \\(Y=y_1\\). With the concepts above, we can write the following two fundamental rules of probability theory:
 
 $$
 P(X=x)=\sum_y P(X=x, Y=y)\\
@@ -269,7 +271,7 @@ $$
 
 #### Basic Concepts
 
-A graph is often denoted by \\(G=(V, E)\\), where \\(V\\) is the set of **vertices** and \\(E\\) is the set of **edges**. An edge \\(e=u, v\\) has two **endpoints** \\(u\\) and \\(v\\), which are said to be **joined** by \\(e\\). In this case, \\(u\\) is called a **neighbor** of \\(v\\), these two vertices are **adjacent**. A graph is called a **directed graph** if all edges are directed. The **degree* of vertices \\(v\\), denoted by \\(d(v)\\), is the number of edges connected with \\(v\\).
+A graph is often denoted by \\(G=(V, E)\\), where \\(V\\) is the set of **vertices** and \\(E\\) is the set of **edges**. An edge \\(e=u, v\\) has two **endpoints** \\(u\\) and \\(v\\), which are said to be **joined** by \\(e\\). In this case, \\(u\\) is called a **neighbor** of \\(v\\), these two vertices are **adjacent**. A graph is called a **directed graph** if all edges are directed. The **degree** of vertices \\(v\\), denoted by \\(d(v)\\), is the number of edges connected with \\(v\\).
 
 #### Algebra Representations of Graphs
 

@@ -177,7 +177,7 @@ $$
 
 where \\(W_t^{ \mid N_v\mid}\\) is the weight matrix for nodes with degree \\( \mid N_v \mid \\) at layer t, \\(N_v\\) denotes the set of neighbors of node v, \\(h_v^t\\) is the embedding of node v at layer t.
 
-The model first adds the embeddings from itself as well as its neighbors, then it uses \\(W_t^{ \mid N_v \mid}\\) to do the transformation.  The model defines different matrices \\(W_t^\mid  N_v \mid\\) for nodes with different degrees.
+The model first adds the embeddings from itself as well as its neighbors, then it uses \\(W_t^{ \mid N_v \mid}\\) to do the transformation.  The model defines different matrices \\(W_t^{\mid  N_v \mid}\\) for nodes with different degrees.
 
 The main drawback of the method is that it cannot be applied to large-scale graphs with more node degrees.
 
@@ -275,7 +275,7 @@ After the matrix \\(\hat{M}\\) is obtained, then the model uses the regular 1D C
 
 #### MoNet
 
-Monti proposed a spatial-domain model (MoNet) on non-Euclidean domains which could generalize several previous techniques. The Geodesic GNN (GCNN) and Anisotropic CNN (ACNN) on manifolds or GCn and DCNN on graphs could be formulated as particular instances of MoNet.
+Monti proposed a spatial-domain model (MoNet) on non-Euclidean domains which could generalize several previous techniques. The Geodesic GNN (GCNN) and Anisotropic CNN (ACNN) on manifolds or GCN and DCNN on graphs could be formulated as particular instances of MoNet.
 
 We use \\(x\\) to denote the node in the graph and \\(y \in N_x\\) to denote the neighbor node of \\(x\\). The MoNet model computes the *pseudo-coordinates* \\(u(x, y)\\) between the node and its neighbor and uses a weighting function among these coordinates:
 
@@ -326,7 +326,7 @@ $$
 
 where \\(\alpha_{ij}\\) is the attention coefficient of node j to i, \\(N_i\\) represents the neighborhoods of node i in the graph. The input node features are denoted as \\(h=\{h_1, h_2, \dots, h_N\}, h_i\in R^F\\), where N is the number of nodes and F is the dimension, the output node features are denoted as \\(h' = \{h_1', h_2', \dots, h_N'\}, h_i' \in R^{F'}\\). \\(W \in R^{F'\times F}\\) is the weight matrix of a shared linear transformation which applied to every node, \\(a \in R^{2F'}\\) is the weight vector. It is normalized by a softmax function and the LeakyReLU nonlinearity is applied.
 
-Then the final output features of each node can be obtained by (after applying a nonlinearity \sigma):
+Then the final output features of each node can be obtained by (after applying a nonlinearity \\(\sigma\\)):
 
 $$
 h_i'=\sigma(\sum_{j\in N_i}\alpha_{ij}Wh_j)

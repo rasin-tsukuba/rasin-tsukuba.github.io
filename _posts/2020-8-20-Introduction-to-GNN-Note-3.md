@@ -139,7 +139,7 @@ Instead of generating adjacency matrix sequentially, **MolGAN** predicts discret
 
 Ma propose constrained variational autoencoders to ensure the semantic validity of generated graphs. The authors apply penalty terms to regularize the distributions of the existence and types of nodes and edges simultaneously. The regularization focuses on ghost nodes and valence, connectivity and node compatibility.
 
-**GCPN** incorporated domain-specific rules through reinforcement learning. To successively construct a molecule graph, GCPN follows current policy to decide whether adding an atom or substructure to an existing molecular graph, or adding a bond to connect exiting atoms. The model is trained by molecular property reward and adversarial loss collectively.
+**GCPN** incorporated domain-specific rules through reinforcement learning. To successively construct a molecule graph, GCPN follows current policy to decide whether adding an atom or substructure to an existing molecular graph, or adding a bond to connect existing atoms. The model is trained by molecular property reward and adversarial loss collectively.
 
 Li propose a model which generates edges and nodes sequentially and utilize a graph neural network to extract the hidden state of the current graph which is used to decide the action in the next step during the sequential generative process.
 

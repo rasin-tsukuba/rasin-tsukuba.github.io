@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Beginner's Guide to Deep Reinforcement Learning
-date: 2020-08-18
+date: 2020-08-28
 subtitle: Basic Knowledge
 author: Rasin
 header-img: img/rl-1.jpg

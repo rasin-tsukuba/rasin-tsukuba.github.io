@@ -33,7 +33,7 @@ Almost all RL problems can be formalised as MDPs.
 Definition: A state \\(s_t\\) is Markov if and only if
 
 $$
-\mathbb{P}[s_{t+1}|s_t] = \mathbb{P}[s_{t+1} | s_1, \dots, s_t]
+\mathbb{P}[s_{t+1} \mid s_t] = \mathbb{P}[s_{t+1} \mid s_1, \dots, s_t]
 $$
 
 The state captures all relevant information from the history. Once the state is known, the history may be thrown away. The state is sufficient statistic of the future.
@@ -150,7 +150,7 @@ Definition: A Markov Decision Process is a tuple \\(\left< \mathcal{S}, \mathcal
 Definition: A policy \\(\pi\\) is a distribution over actions given states:
 
 $$
-\pi(a|s) = \mathbb{P}[a_t = a \mid s_t = s]
+\pi(a \mid s) = \mathbb{P}[a_t = a \mid s_t = s]
 $$
 
 A policy fully defines the behavior of an agent. MDP policies depend on the current state. Policies are stationary (time-independent).
@@ -298,11 +298,11 @@ Bellman Optimality Equation is non-linear. There is no closed form solution in g
 - Markov Decision Process (MDP):
   - Defined by a state set \\(S\\)
   - action set \\(A\\) 
-  - and one-step dynamics \\(p(s',r | s,a)\\). 
+  - and one-step dynamics \\(p(s',r \mid s,a)\\). 
   - In practice, we often don't know the full MDP (but we know that it's some MDP).
 - The Value Function \\(v(s)\\) estimates how "good" it is for an agent to be in a particular state \\(s\\)
   - More formally, it's the expected return \\(G_t\\) given that the agent is in state \\(s\\)
-  - \\(v(s) = E[G_t | S_t = s]\\)
+  - \\(v(s) = E[G_t \mid S_t = s]\\)
   - Note that the value function is specific to a given policy \\(\pi\\).
 - Action Value function: \\(q(s, a)\\) estimates how "good" it is for an agent to be in state \\(s\\) and take action \\(a\\). 
   - Similar to the value function, but also considers the action.

@@ -10,8 +10,7 @@ tags:
     - Reinforcement Learning
 ---
 
-> Lecture: [Introduction to Reinforcement
-Learning](https://www.davidsilver.uk/wp-content/uploads/2020/03/intro_RL.pdf) 
+> Lecture: [Introduction to Reinforcement Learning](https://www.davidsilver.uk/wp-content/uploads/2020/03/intro_RL.pdf) 
 
 ## About Reinforcement Learning
 

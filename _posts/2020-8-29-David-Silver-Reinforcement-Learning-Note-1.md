@@ -30,9 +30,9 @@ tags:
 - The agent's job is to maximize **cumulative reward**
 - Reinforcement learning is based on the **reward hypothesis**
 
-**Reward Hypothesis Definition**: The goals can be described by the maximization of expected cumulative reward.
+**Reward Hypothesis Definition**: The goals can be described by the **maximization of expected cumulative reward**.
 
-If a problem cannot satisfy with the reward hypothesis, it cannot solved by reinforcement learning.
+If a problem cannot satisfy with the reward hypothesis, it **cannot** solved by reinforcement learning.
 
 ### Sequential Decision Making
 

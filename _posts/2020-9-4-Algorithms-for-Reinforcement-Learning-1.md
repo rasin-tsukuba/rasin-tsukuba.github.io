@@ -236,4 +236,49 @@ $$
 (T^\pi V)(x) = r(x, \pi(x)) + \gamma \sum_{y \in \mathcal{X}} \mathcal{P}(x, a, y) V(y), x \in \mathcal{X}
 $$
 
-When the state space \\(\mathcal{X}\\) is finite, it has \\(D\\) states, 
+When the state space \\(\mathcal{X}\\) is finite, it has \\(D\\) states, \\(\mathbb{R}^\mathcal{X}\\) can be identified with the \\(D\\)-dimensional Euclidean space and \\(V \in \mathbb{R}^\mathcal{X}\\) can be thought of as a \\(D\\)-dimensional vector. In this case, it can be written in the form:
+
+$$
+r^\pi + \gamma P^\pi V\pi = V\pi
+$$
+
+The optimal value function is known to satisfy a certain fixed-point equation: 
+
+$$
+V*(x) = (T*V)(x) = \sup{a\in \mathcal{A}}{r(x,a) + \gamma \sum_{y \in \mathcal{X}}\mathcal{P}(x,a,y)V(y)}, x \in \mathcal{X}
+$$
+
+If \\(0 < \gamma < 1\\), then \\(T*\\) is a **maximum-norm contraction**, and the fixed-point equation \\(T*V = V\\) has a unique solution.
+
+The action-value function underlying a policy and the optimal action-value function also satisfy some fixed point equations similar to the previous ones:
+
+$$
+T\pi Q(x,a) = r(x,a) + \gamma \sum_{y\in \mathcal{X}}\mathcal{P}(x,a,y)Q(y, \pi(y)), (x,a) \in \mathcal{X} \times \mathcal{A}
+$$
+$$
+T* Q(x,a) = r(x,a) + \gamma \sum_{y\in \mathcal{X}}\mathcal{P}(x,a,y)\sup{a' \in \mathcal{A}}Q(y, a'), (x,a) \in \mathcal{X} \times \mathcal{A}
+$$
+
+Note that \\(T\pi\\) is affine linear, \\(T*\\) is nonlinear.
+
+The action-value function of \\(\pi, Q^\pi\\), satisfies \\(T^\pi Q^\pi = Q^\pi\\) and \\(Q\pi\\) is the unique solution to this fixed-point equation.
+
+### Dynamic Programming Algorithms for solving MDPs
+
+Value iteration generates a sequence of value functions:
+
+$$
+V_{k+1} = T*V_k, k \geq 0
+$$
+
+where \\(V_0\\) is arbitrary. \\(V_k\\) converges to \\(V*\\) at a geometric rate.
+
+*Value iteration* can also be used in conjunction with action-value functions; in which case, it takes the form:
+
+$$
+Q_{k+1} = T*Q_k, k \geq 0
+$$
+
+which again converges to \\(Q*\\) at a geometric rate. The idea is that once \\(V_k\\) (or \\(Q_k\\)) is close to \\(V*\\) (or \\(Q*\\)), a policy that is greedy with respect to \\(V_k\\) (or \\(Q_k\\)) will be close to optimal.
+
+*Policy iteration* works as follows. Fix an arbitrary initial policy \\(\pi_0\\). At iteration \\(k > 0\\), compute the action-value function underlying \\(\pi_k\\). Next, given \\(Q^{\pi_k}\\), define \\(\pi_{k+1}\\) as a policy that is greedy with respect to \\(Q^{\pi_k}\\). After \\(k\\) iterations, policy iteration gives a policy not worse than the policy that is greedy to the value function computed using \\(k\\) iterations of value iteration if the two procedures are started with the same initial value function. However, the computational cost of a single step in policy iteration is much higher than that of one update in value iteration.

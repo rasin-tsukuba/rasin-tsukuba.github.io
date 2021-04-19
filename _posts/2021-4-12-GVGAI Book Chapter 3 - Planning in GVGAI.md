@@ -13,8 +13,11 @@ tags:
 ---
 
 [书籍网站](https://gaigresearch.github.io/gvgaibook/)
+
 [本章原文](https://gaigresearch.github.io/gvgaibook/PDF/chapters/ch03.pdf?raw=true)
+
 [本章练习](https://gaigresearch.github.io/gvgaibook/PDF/exercises/exercises03.pdf?raw=true)
+
 ------
 
 # 简介

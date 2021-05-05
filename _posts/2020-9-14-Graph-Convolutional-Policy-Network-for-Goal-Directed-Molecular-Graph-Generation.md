@@ -9,6 +9,7 @@ catalog: true
 tags:
     - Reinforcement Learning
     - Graph Generation
+    - Paper Reading
 ---
 
 [Graph Convolutional Policy Network for Goal-Directed Molecular Graph Generation](https://arxiv.org/abs/1806.02473)

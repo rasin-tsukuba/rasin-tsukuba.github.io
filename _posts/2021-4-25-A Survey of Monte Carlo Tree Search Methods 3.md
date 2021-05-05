@@ -9,6 +9,7 @@ catalog: true
 tags:
   - Games
   - MCTS
+  - Paper Reading
 ---
 
 # 变种
